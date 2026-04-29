@@ -48,7 +48,7 @@ export default function App() {
     <div className="relative min-h-screen bg-white text-black font-dm selection:bg-black selection:text-white flex flex-col">
       {/* Editorial Navigation */}
       <nav className="w-full h-20 px-10 flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white">
-        <div className="text-[12px] font-bold uppercase tracking-[0.15em]">Erik Sørensen / Product Designer</div>
+        <div className="text-[12px] font-bold uppercase tracking-[0.15em]">ABHISHEK / Product Designer</div>
         <div className="flex gap-10 text-[11px] font-bold uppercase tracking-[0.15em]">
           <a href="#" className="hover:opacity-40 transition-opacity">Work</a>
           <a href="#" className="hover:opacity-40 transition-opacity">Studio</a>
@@ -72,7 +72,7 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      <FloatingActionMenu 
+      <FloatingActionMenu
         currentVariation={currentVariation}
         onSelect={setCurrentVariation}
         variations={variations}
@@ -80,7 +80,7 @@ export default function App() {
 
       {/* Aesthetic Label */}
       <div className="fixed top-24 right-10 z-50 pointer-events-none">
-        <motion.div 
+        <motion.div
           key={currentVariation}
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
