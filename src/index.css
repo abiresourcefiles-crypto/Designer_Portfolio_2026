@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-dm: "DM Sans", sans-serif;
+  --font-sans: "DM Sans", "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+}
+
+@layer base {
+  body {
+    @apply antialiased bg-white text-black;
+    font-family: var(--font-dm);
+  }
+
+  /* Editorial Grid Elements */
+  .editorial-border {
+    @apply border-black;
+  }
+}
