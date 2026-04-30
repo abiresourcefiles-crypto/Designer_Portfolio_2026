@@ -1,60 +1,96 @@
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
 import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail } from 'lucide-react';
 
 function Variation9() {
+  const [index, setIndex] = useState(0);
+  const words = ["Un", "Re", ""];
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isVisible = useRef(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.current = entry.isIntersecting;
+      },
+      { threshold: 0.1 } // triggers when at least 10% of hero is visible
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    let audioCtx: AudioContext | null = null;
+
+    const playBeat = () => {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        // Deep, subtle thud/heartbeat
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(80, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.1);
+        
+        // Very low volume, quick fade out
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.1);
+      } catch (e) {
+        // Silently fail if browser blocks audio before interaction
+      }
+    };
+
+    const timer = setInterval(() => {
+      setIndex((prev) => {
+        const next = (prev + 1) % words.length;
+        if (next !== 2 && isVisible.current) { // Only play beat when text is actually appearing and hero is visible
+          playBeat();
+        }
+        return next;
+      });
+    }, 1000);
+    
+    return () => {
+      clearInterval(timer);
+      if (audioCtx && audioCtx.state !== 'closed') {
+        audioCtx.close();
+      }
+    };
+  }, []);
+
   return (
-    <section className="min-h-screen bg-[#DEDCD7] font-mono text-[#2D2D2D] p-0 relative overflow-hidden border-[20px] border-[#DEDCD7]">
-      {/* Structural Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#bcbab5_1px,transparent_1px),linear-gradient(to_bottom,#bcbab5_1px,transparent_1px)] bg-[size:100px_100px]"></div>
-
-      <div className="relative z-10 min-h-[calc(100vh-40px)] border border-black/10 flex flex-col">
-        <header className="p-8 flex justify-between items-start border-b border-black/10">
-          <div className="text-right">
-            <div className="font-bold">STATUS: STABLE</div>
-            <div className="text-[10px] opacity-40">INDIA // 05:56</div>
-          </div>
-        </header>
-
-        <div className="flex-1 flex items-end p-8 md:p-16">
-          <div className="w-full">
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ type: 'spring', damping: 20 }}
+    <div ref={heroRef} className="min-h-screen bg-white text-black flex items-center justify-center font-dm overflow-hidden border-[20px] border-[#DEDCD7]">
+      <div className="flex text-[15vw] font-bold leading-none tracking-tighter uppercase">
+        <div className="w-[18vw] flex justify-end">
+          <AnimatePresence mode="popLayout">
+            <motion.span
+              key={index}
+              initial={{ filter: "blur(20px)", opacity: 0, scale: 2 }}
+              animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
+              exit={{ filter: "blur(20px)", opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.4 }}
+              className="text-black"
             >
-              <h1 className="text-[12vw] font-bold leading-[0.8] mb-12 tracking-tighter uppercase mix-blend-multiply">
-                LOOK.GOOD<br />
-                WORK.BETTER
-              </h1>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div className="md:col-span-2 text-sm leading-relaxed max-w-md bg-white/80 backdrop-blur-sm p-4 border border-black/5 uppercase">
-                  I started by making things look good. Now I make things work better. Architectural frameworks for digital resilience.
-                </div>
-                <div className="flex flex-col justify-end gap-2 text-xs font-bold uppercase underline">
-                  <a href="#">Technical_Specs</a>
-                  <a href="#">Material_Archive</a>
-                </div>
-                <div className="flex items-end justify-end">
-                  <div className="w-24 h-24 border border-black flex items-center justify-center font-bold text-sm bg-black text-[#DEDCD7] hover:bg-[#DEDCD7] hover:text-black transition-colors cursor-pointer uppercase text-center">
-                    View<br />Build
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+              {words[index]}
+            </motion.span>
+          </AnimatePresence>
         </div>
-
-        <footer className="p-8 flex justify-between text-[10px] bg-black text-[#DEDCD7] border-t border-black">
-          <div>LAT: 52.3676° N // LON: 4.9041° E</div>
-          <div className="flex gap-12">
-            <span>ARCHING_DIGIT_SYSTEMS</span>
-            <span>C_2026</span>
-          </div>
-        </footer>
+        <div className="ml-2">LEARN</div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -192,11 +228,104 @@ function Footer() {
   );
 }
 
+function Experience() {
+  const experiences = [
+    {
+      date: "JAN 26 - MAR 26",
+      role: "Product Designer at SuperAlign",
+      desc: "Designing Products for AI Agents & Security"
+    },
+    {
+      date: "OCT 25 - JAN 26",
+      role: "Product Designer at Quarlatis",
+      desc: "Made end-to-end seamless experiences in the world of Web3 & Blockchain"
+    },
+    {
+      date: "JUN 25 - AUG 25",
+      role: "Visual Designer at Moonkraft Studio",
+      desc: "Made things pretty, somehow it worked. Clients smiled, I cried only a little."
+    },
+    {
+      date: "FEB 25 - APR 25",
+      role: "Product Designer at Guide U",
+      desc: "Worked on Browser Extension based SaaS from scratch."
+    },
+    {
+      date: "DEC 24 - NOW",
+      role: "Freelance Product Designer",
+      desc: "Freelancing, aka professionally 'winging it'"
+    }
+  ];
+
+  return (
+    <section className="bg-[#0a0a0a] text-white font-dm py-32 px-12 md:px-24">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-20">
+          <h2 className="text-sm font-bold tracking-widest mb-6 uppercase text-white/40">Experience</h2>
+          <p className="text-xl md:text-2xl text-white/70">somehow convinced real people to trust me with their products</p>
+        </div>
+
+        <div className="flex flex-col gap-16">
+          {experiences.map((exp, i) => (
+            <div key={i} className="flex flex-col md:flex-row md:items-start gap-4 md:gap-16">
+              <div className="md:w-1/4 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40 pt-1">
+                {exp.date}
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-bold mb-2 tracking-tight">{exp.role}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{exp.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  const photos = [
+    { src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop", rot: "-rotate-6" },
+    { src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop", rot: "rotate-3" },
+    { src: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=800&auto=format&fit=crop", rot: "-rotate-12" },
+    { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop", rot: "rotate-6" },
+    { src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", rot: "-rotate-3" }
+  ];
+
+  return (
+    <section className="bg-[#050505] text-white font-dm pt-32 pb-16 overflow-hidden relative border-t border-white/5">
+      <div className="max-w-4xl mx-auto px-12 md:px-24 mb-24">
+        <h2 className="text-sm font-bold tracking-widest mb-6 uppercase text-white/40">Life & Culture</h2>
+        <p className="text-xl md:text-2xl text-white/70">Behind the scenes.</p>
+      </div>
+      
+      <div className="flex justify-center items-center px-4 h-48 md:h-72 mt-12 group">
+        {photos.map((photo, i) => (
+          <div 
+            key={i} 
+            className={`relative w-28 md:w-56 aspect-[4/5] -mx-4 md:-mx-8 border-[6px] md:border-8 border-white bg-white shadow-2xl rounded-sm transition-all duration-500 hover:z-50 hover:-translate-y-12 hover:scale-110 hover:rotate-0 cursor-pointer ${photo.rot}`}
+          >
+            <div className="w-full h-full overflow-hidden">
+              <img 
+                src={photo.src} 
+                alt="Gallery" 
+                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function VariationWithCaseStudies() {
   return (
     <>
       <Variation9 />
       <CaseStudies />
+      <Experience />
+      <Gallery />
       <Footer />
     </>
   );
