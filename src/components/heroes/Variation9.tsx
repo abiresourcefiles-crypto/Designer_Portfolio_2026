@@ -10,13 +10,9 @@ function Variation9() {
 
       <div className="relative z-10 min-h-[calc(100vh-40px)] border border-black/10 flex flex-col">
         <header className="p-8 flex justify-between items-start border-b border-black/10">
-          <div>
-            <div className="font-bold text-xl mb-1">STRUCT.PROJECT_01</div>
-            <div className="text-[10px] opacity-40">CATALOGUE_ENTRY_2026</div>
-          </div>
           <div className="text-right">
             <div className="font-bold">STATUS: STABLE</div>
-            <div className="text-[10px] opacity-40">UTC+1 // 20:16</div>
+            <div className="text-[10px] opacity-40">INDIA // 05:56</div>
           </div>
         </header>
 
@@ -28,10 +24,10 @@ function Variation9() {
               transition={{ type: 'spring', damping: 20 }}
             >
               <h1 className="text-[12vw] font-bold leading-[0.8] mb-12 tracking-tighter uppercase mix-blend-multiply">
-                LOOK.GOOD<br/>
+                LOOK.GOOD<br />
                 WORK.BETTER
               </h1>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="md:col-span-2 text-sm leading-relaxed max-w-md bg-white/80 backdrop-blur-sm p-4 border border-black/5 uppercase">
                   I started by making things look good. Now I make things work better. Architectural frameworks for digital resilience.
@@ -41,9 +37,9 @@ function Variation9() {
                   <a href="#">Material_Archive</a>
                 </div>
                 <div className="flex items-end justify-end">
-                   <div className="w-24 h-24 border border-black flex items-center justify-center font-bold text-sm bg-black text-[#DEDCD7] hover:bg-[#DEDCD7] hover:text-black transition-colors cursor-pointer uppercase text-center">
-                     View<br/>Build
-                   </div>
+                  <div className="w-24 h-24 border border-black flex items-center justify-center font-bold text-sm bg-black text-[#DEDCD7] hover:bg-[#DEDCD7] hover:text-black transition-colors cursor-pointer uppercase text-center">
+                    View<br />Build
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -51,11 +47,11 @@ function Variation9() {
         </div>
 
         <footer className="p-8 flex justify-between text-[10px] bg-black text-[#DEDCD7] border-t border-black">
-           <div>LAT: 52.3676° N // LON: 4.9041° E</div>
-           <div className="flex gap-12">
-             <span>ARCHING_DIGIT_SYSTEMS</span>
-             <span>C_2026</span>
-           </div>
+          <div>LAT: 52.3676° N // LON: 4.9041° E</div>
+          <div className="flex gap-12">
+            <span>ARCHING_DIGIT_SYSTEMS</span>
+            <span>C_2026</span>
+          </div>
         </footer>
       </div>
     </section>
@@ -64,45 +60,64 @@ function Variation9() {
 
 function CaseStudies() {
   const projects = [
-    { id: "A-501", title: "FORGE CORE", spec: "B-Grid System v4.1" },
-    { id: "M-202", title: "SIGNAL ARCH", spec: "Latency Logic" },
-    { id: "X-990", title: "KINETIC UI", spec: "Fluid Framework" },
-    { id: "T-112", title: "STATIC OS", spec: "Monolith v2" }
+    {
+      id: "A-501",
+      title: "VISION 2.0",
+      spec: "B-Grid System v4.1",
+      desc: "Bridging the Gap for Healthcare Professional, Nurse, Medical Students, Doctors with Color Vision Deficiency (CVD) using Assistive Vision Technology.",
+      image: "/public/Vision 2.0.jpg",
+      link: "/vision-2"
+    },
+    {
+      id: "M-202",
+      title: "ONE BUTTON CHANGE that's it? No!",
+      spec: "Latency Logic",
+      desc: "Optimized data flow visualization interface with real-time feedback loops.",
+      image: "/public/Voice Case Study.jpg",
+      link: "/one-button"
+    },
+    {
+      id: "X-990",
+      title: "KINETIC UI",
+      spec: "Fluid Framework",
+      desc: "Motion-first design system exploring the physics of digital interactions.",
+      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=2670&auto=format&fit=crop",
+      link: "/kinetic-ui"
+    },
+    {
+      id: "T-112",
+      title: "STATIC OS",
+      spec: "Monolith v2",
+      desc: "A minimalist operating system concept designed for distraction-free workflows.",
+      image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop",
+      link: "/static-os"
+    }//
   ];
 
   return (
-    <section className="bg-black text-white font-dm p-8 md:p-12">
-      <div className="max-w-7xl mx-auto border-t-2 border-white/20 pt-16">
-        <div className="flex justify-between items-end mb-16 px-4">
-          <h2 className="text-2xl font-black uppercase tracking-tighter">DATA SET // 04 PROJECTS</h2>
-          <div className="text-[9px] font-bold opacity-30 text-right uppercase">
-             Automated Grid Generation <br/> v1.0.4 - Build 2026
-          </div>
+    <section className="bg-black text-white font-dm py-32 px-12 md:px-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold tracking-tight mb-4 uppercase">Recent Works</h2>
+          <div className="w-12 h-1 bg-white opacity-20"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 border border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {projects.map((p, i) => (
-            <div key={i} className="border-r border-b border-white/20 p-8 group hover:bg-white/5 transition-colors last:border-r-0 md:last:border-r">
-               <div className="flex justify-between items-start mb-12">
-                  <span className="text-[10px] font-bold opacity-30 font-mono tracking-tighter">ID_{p.id}</span>
-                  <div className="w-2 h-2 bg-white/20 rounded-full group-hover:bg-white transition-colors"></div>
-               </div>
-               
-               <div className="aspect-square bg-white/5 mb-12 overflow-hidden border border-white/10 group-hover:border-white/30 transition-all">
-                  <img 
-                    src={`https://picsum.photos/seed/ind${i}/600/600`} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover grayscale brightness-50 group-hover:brightness-100 transition-all duration-700"
-                    referrerPolicy="no-referrer"
-                  />
-               </div>
-
-               <h3 className="text-3xl font-black uppercase tracking-tight mb-2 leading-none whitespace-nowrap">{p.title}</h3>
-               <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-12">{p.spec}</p>
-
-               <button className="w-full py-4 border border-white/20 text-[10px] font-bold uppercase tracking-widest group-hover:border-white transition-all">
-                  Access Study
-               </button>
+            <div key={i} className="group cursor-pointer">
+              <div className="aspect-[16/10] bg-[#111] mb-8 overflow-hidden rounded-sm">
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
+              <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-sm">{p.desc}</p>
+              <a href={p.link} className="inline-block px-6 py-3 border border-white/20 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                View Case Study
+              </a>
             </div>
           ))}
         </div>
@@ -113,7 +128,7 @@ function CaseStudies() {
 
 function Footer() {
   const [copied, setCopied] = useState(false);
-  const email = "industrial@erik.design";
+  const email = "abhishekdesignspace@gmail.com";
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -130,40 +145,46 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-[#DEDCD7] font-mono p-8 md:p-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto border border-white/20 grid grid-cols-1 md:grid-cols-2">
-        <div className="p-12 border-b md:border-b-0 md:border-r border-white/20">
-          <div className="text-[10px] opacity-30 mb-8 tracking-widest uppercase">// INITIATE_CONTACT</div>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-12 leading-[0.9]">
-            BUILT. <br /> SOMETHING. <br /> TOASTED.
+    <footer className="bg-black text-white font-dm py-48 px-8 overflow-hidden text-center">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-[12px] font-bold uppercase tracking-[0.4em] opacity-30 mb-8 italic">The final chapter.</div>
+          <h2 className="text-4xl md:text-7xl font-bold tracking-tight mb-16 leading-[1.1]">
+            From visuals to products. <br /> Let’s create what’s next.
           </h2>
-          <button 
-            onClick={copyEmail}
-            className="w-full md:w-auto px-10 py-5 bg-[#DEDCD7] text-black font-bold uppercase text-xs flex items-center justify-center gap-4 hover:bg-white transition-all shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)]"
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Mail className="w-4 h-4" />}
-            <span>{copied ? "COPIED_ADDRESS" : "industrial@erik.design"}</span>
-          </button>
-        </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3">
-          {socials.map((social, i) => (
-            <a 
-              key={i} 
-              href={social.href} 
-              className="p-12 border-r border-b border-white/10 flex flex-col items-center justify-center gap-4 hover:bg-white/5 transition-colors group"
-              aria-label="Social Link"
-            >
-              <social.icon className="w-8 h-8 opacity-30 group-hover:opacity-100 group-hover:scale-110 transition-all" />
-              <div className="text-[8px] font-bold opacity-10 uppercase tracking-widest font-sans">LINK_0{i+1}</div>
-            </a>
-          ))}
-          <div className="p-12 flex items-end justify-end">
-            <div className="text-right">
-              <div className="text-[10px] font-bold opacity-30 uppercase tracking-[0.3em]">Build_Vers: 2.0.4</div>
-              <div className="text-[10px] font-bold opacity-30 uppercase tracking-[0.3em]">© 2026_ERIK_S</div>
-            </div>
+          <button
+            onClick={copyEmail}
+            className="group relative inline-flex items-center gap-4 px-12 py-6 bg-white text-black font-bold uppercase text-xs tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden"
+          >
+            <span className="relative z-10">{copied ? "Copied" : "abhishekdesignspace@gmail.com"}</span>
+            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-30 group-hover:opacity-100 transition-opacity" />}
+          </button>
+        </motion.div>
+
+        <div className="mt-32 flex flex-col items-center gap-16">
+          <div className="flex gap-12">
+            {socials.map((social, i) => (
+              <a
+                key={i}
+                href={social.href}
+                className="opacity-20 hover:opacity-100 transition-all transform hover:scale-125"
+                aria-label="Social Link"
+              >
+                <social.icon className="w-6 h-6" />
+              </a>
+            ))}
           </div>
+
+          <div className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-10">
+            © 2026  <br></br>
+            <br></br>
+            <br></br>
+            Learn - Unlearn - Relearn          </div>
         </div>
       </div>
     </footer>
