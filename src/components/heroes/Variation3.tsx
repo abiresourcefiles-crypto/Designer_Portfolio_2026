@@ -5,13 +5,7 @@ import { Linkedin, Twitter, Globe, Figma, Dribbble, Copy, Check } from 'lucide-r
 function Variation3() {
   return (
     <section className="min-h-screen bg-white font-dm text-black flex flex-col p-8 md:p-12 relative overflow-hidden">
-      <nav className="w-full flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] mb-24 opacity-40">
-        <div>Independent Agency / Studio</div>
-        <div className="flex gap-8">
-           <a href="#" className="hover:opacity-50">Work</a>
-           <a href="#" className="hover:opacity-50">Archive</a>
-        </div>
-      </nav>
+      
 
       <div className="flex-1 max-w-6xl w-full mx-auto flex flex-col justify-center">
         <motion.div

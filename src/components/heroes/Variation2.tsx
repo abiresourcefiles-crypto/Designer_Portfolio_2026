@@ -5,10 +5,7 @@ import { Linkedin, Twitter, Globe, Figma, Dribbble, Copy, Check, Mail } from 'lu
 function Variation2() {
   return (
     <section className="min-h-screen bg-white font-dm text-black flex flex-col items-center justify-center p-8 md:p-24 overflow-hidden relative">
-      <nav className="absolute top-8 left-8 right-8 flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">
-        <div>/PROD_D / 2026</div>
-        <div>/AVAILABLE</div>
-      </nav>
+      
 
       <div className="max-w-3xl w-full text-center">
         <motion.div
