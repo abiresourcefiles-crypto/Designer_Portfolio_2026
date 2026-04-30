@@ -66,7 +66,7 @@ function CaseStudies() {
       spec: "B-Grid System v4.1",
       desc: "Bridging the Gap for Healthcare Professional, Nurse, Medical Students, Doctors with Color Vision Deficiency (CVD) using Assistive Vision Technology.",
       image: "./Vision 2.0.jpg",
-      link: "/vision-2"
+      link: "https://www.behance.net/gallery/247223671/Vision-20-Assistive-Tool-for-CVD-Medicos"
     },
     {
       id: "M-202",
@@ -74,7 +74,7 @@ function CaseStudies() {
       spec: "Latency Logic",
       desc: "Optimized data flow visualization interface with real-time feedback loops.",
       image: "./Voice Case Study.jpg",
-      link: "/one-button"
+      link: "https://www.behance.net/gallery/247223671/Vision-20-Assistive-Tool-for-CVD-Medicos"
     },
     {
       id: "X-990",
@@ -104,7 +104,7 @@ function CaseStudies() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {projects.map((p, i) => (
-            <div key={i} className="group cursor-pointer">
+            <a href={p.link} target="_blank" rel="noopener noreferrer" key={i} className="group block cursor-pointer">
               <div className="aspect-[16/10] bg-[#111] mb-8 overflow-hidden rounded-sm">
                 <img
                   src={p.image}
@@ -115,10 +115,10 @@ function CaseStudies() {
               </div>
               <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
               <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-sm">{p.desc}</p>
-              <a href={p.link} className="inline-block px-6 py-3 border border-white/20 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+              <div className="inline-block px-6 py-3 border border-white/20 text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
                 View Case Study
-              </a>
-            </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
@@ -137,9 +137,8 @@ function Footer() {
   };
 
   const socials = [
-    { icon: Linkedin, href: "#" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/abhishek-r-m/" },
     { icon: Twitter, href: "#" },
-    { icon: Globe, href: "#" },
     { icon: Figma, href: "#" },
     { icon: Dribbble, href: "#" }
   ];
@@ -172,6 +171,8 @@ function Footer() {
               <a
                 key={i}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="opacity-20 hover:opacity-100 transition-all transform hover:scale-125"
                 aria-label="Social Link"
               >
