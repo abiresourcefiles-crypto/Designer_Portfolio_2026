@@ -65,7 +65,7 @@ function CaseStudies() {
       title: "VISION 2.0",
       spec: "B-Grid System v4.1",
       desc: "Bridging the Gap for Healthcare Professional, Nurse, Medical Students, Doctors with Color Vision Deficiency (CVD) using Assistive Vision Technology.",
-      image: "/public/Vision 2.0.jpg",
+      image: "./Vision 2.0.jpg",
       link: "/vision-2"
     },
     {
@@ -73,7 +73,7 @@ function CaseStudies() {
       title: "ONE BUTTON CHANGE that's it? No!",
       spec: "Latency Logic",
       desc: "Optimized data flow visualization interface with real-time feedback loops.",
-      image: "/public/Voice Case Study.jpg",
+      image: "./Voice Case Study.jpg",
       link: "/one-button"
     },
     {
