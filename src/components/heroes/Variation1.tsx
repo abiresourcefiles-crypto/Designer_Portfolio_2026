@@ -5,15 +5,23 @@ import { useState } from 'react';
 function Variation1() {
   return (
     <section className="relative min-h-screen bg-white font-dm text-black flex flex-col overflow-hidden">
-
-
+      {/* Navigation */}
+      <nav className="w-full max-w-7xl mx-auto px-8 py-8 flex justify-between items-center z-10">
+        <div className="text-xl font-bold tracking-tighter">STUDIO.JB</div>
+        <div className="flex gap-12 text-sm font-medium">
+          <a href="#" className="hover:opacity-50 transition-opacity">WORK</a>
+          <a href="#" className="hover:opacity-50 transition-opacity">SERVICES</a>
+          <a href="#" className="hover:opacity-50 transition-opacity">JOURNAL</a>
+          <a href="#" className="hover:opacity-50 transition-opacity">CONTACT</a>
+        </div>
+      </nav>
 
       {/* Main Content */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-8 flex flex-col justify-center">
         <div className="grid grid-cols-12 gap-8 items-start">
           {/* Headline */}
           <div className="col-span-12 lg:col-span-8">
-            <motion.h1
+            <motion.h1 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -25,11 +33,11 @@ function Variation1() {
               work better.
             </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="flex gap-4"
+            <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ delay: 0.4, duration: 1 }}
+               className="flex gap-4"
             >
               <button id="view-work-btn" className="px-8 py-4 bg-black text-white text-sm font-bold tracking-widest uppercase hover:bg-black/80 transition-colors">
                 View Work
@@ -95,9 +103,9 @@ function CaseStudies() {
           {projects.map((p, i) => (
             <div key={i} className="bg-black p-12 flex flex-col gap-8 aspect-square md:aspect-auto">
               <div className="aspect-video bg-white/5 border border-white/10 relative overflow-hidden group">
-                <img
-                  src={`C:\Users\HP\Downloads\Designer 2026 portfolio\post.jpg`}
-                  alt={p.title}
+                <img 
+                  src={`https://picsum.photos/seed/swiss${i}/800/450`} 
+                  alt={p.title} 
                   className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
@@ -145,7 +153,7 @@ function Footer() {
             <h2 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-12 leading-[0.9]">
               Let’s build <br /> something useful.
             </h2>
-            <button
+            <button 
               onClick={copyEmail}
               className="group flex items-center gap-4 px-8 py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-white/90 transition-all active:scale-95"
             >
@@ -157,9 +165,9 @@ function Footer() {
           <div className="flex flex-col md:items-end justify-between h-full">
             <div className="grid grid-cols-3 md:grid-cols-5 gap-8 mb-12">
               {socials.map((social, i) => (
-                <a
-                  key={i}
-                  href={social.href}
+                <a 
+                  key={i} 
+                  href={social.href} 
                   className="w-12 h-12 flex items-center justify-center border border-white/20 hover:border-white transition-colors group"
                   aria-label={social.label}
                 >
@@ -167,7 +175,7 @@ function Footer() {
                 </a>
               ))}
             </div>
-
+            
             <div className="text-[10px] uppercase tracking-[0.4em] opacity-40 text-right">
               Swiss Minimal / 2026 / Copenhagen
             </div>

@@ -5,7 +5,10 @@ import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy } from 'lucide-r
 function Variation7() {
   return (
     <section className="min-h-screen bg-white font-dm text-black flex flex-col p-8 md:p-12 relative overflow-hidden">
-      
+      <nav className="w-full flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.4em] mb-12 opacity-30">
+        <div>Product Design</div>
+        <div>Available 2026</div>
+      </nav>
 
       <div className="flex-1 flex flex-col justify-center">
         <motion.h1 
