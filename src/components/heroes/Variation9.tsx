@@ -32,20 +32,20 @@ function Variation9() {
         }
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        
+
         // Deep, subtle thud/heartbeat
         osc.type = 'sine';
         osc.frequency.setValueAtTime(80, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.1);
-        
+
         // Very low volume, quick fade out
         gain.gain.setValueAtTime(0, audioCtx.currentTime);
         gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-        
+
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        
+
         osc.start(audioCtx.currentTime);
         osc.stop(audioCtx.currentTime + 0.1);
       } catch (e) {
@@ -62,7 +62,7 @@ function Variation9() {
         return next;
       });
     }, 1000);
-    
+
     return () => {
       clearInterval(timer);
       if (audioCtx && audioCtx.state !== 'closed') {
@@ -298,18 +298,18 @@ function Gallery() {
         <h2 className="text-sm font-bold tracking-widest mb-6 uppercase text-white/40">Life & Culture</h2>
         <p className="text-xl md:text-2xl text-white/70">Behind the scenes.</p>
       </div>
-      
+
       <div className="flex justify-center items-center px-4 h-48 md:h-72 mt-12 group">
         {photos.map((photo, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             className={`relative w-28 md:w-56 aspect-[4/5] -mx-4 md:-mx-8 border-[6px] md:border-8 border-white bg-white shadow-2xl rounded-sm transition-all duration-500 hover:z-50 hover:-translate-y-12 hover:scale-110 hover:rotate-0 cursor-pointer ${photo.rot}`}
           >
             <div className="w-full h-full overflow-hidden">
-              <img 
-                src={photo.src} 
-                alt="Gallery" 
-                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
+              <img
+                src={photo.src}
+                alt="Gallery"
+                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
               />
             </div>
           </div>

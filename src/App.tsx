@@ -21,8 +21,8 @@ const HeroComponents = [
   Variation4,
   Variation8,
   Variation9,
-  Variation10,
-
+  Variation10
+];
 export default function App() {
   const [currentVariation, setCurrentVariation] = useState(0);
   const ActiveHero = HeroComponents[currentVariation];
