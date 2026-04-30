@@ -91,7 +91,7 @@ function CaseStudies() {
       desc: "A minimalist operating system concept designed for distraction-free workflows.",
       image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop",
       link: "/static-os"
-    }//
+    }
   ];
 
   return (
