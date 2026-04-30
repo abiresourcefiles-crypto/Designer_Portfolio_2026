@@ -8,22 +8,12 @@ import Variation4 from './components/heroes/Variation4';
 import Variation8 from './components/heroes/Variation8';
 import Variation9 from './components/heroes/Variation9';
 import Variation10 from './components/heroes/Variation10';
-import Variation11 from './components/heroes/Variation11';
-import Variation12 from './components/heroes/Variation12';
-import Variation13 from './components/heroes/Variation13';
-import Variation14 from './components/heroes/Variation14';
-import Variation15 from './components/heroes/Variation15';
 const variations = [
   "Startup Style (P8)",
   "Asymmetric Grid (P5)",
   "Timeline Journey (P7)",
   "Industrial Struct (Custom)",
   "Story Driven (P10)",
-  "Learn Anim: Slide",
-  "Learn Anim: Pop",
-  "Learn Anim: Blur",
-  "Learn Anim: Slot",
-  "Learn Anim: Scatter"
 ];
 
 const HeroComponents = [
@@ -32,12 +22,6 @@ const HeroComponents = [
   Variation8,
   Variation9,
   Variation10,
-  Variation11,
-  Variation12,
-  Variation13,
-  Variation14,
-  Variation15
-];
 
 export default function App() {
   const [currentVariation, setCurrentVariation] = useState(0);
