@@ -319,12 +319,62 @@ function Gallery() {
   );
 }
 
+function ToolsStack() {
+  const tools = [
+    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", border: "border border-white/10" },
+    { name: "Framer", bg: "bg-gradient-to-br from-[#0055FF] to-[#0033AA]", text: "text-white", label: "F", border: "border border-transparent" },
+    { name: "Figma", bg: "bg-[#2C2D33]", text: "text-[#F24E1E]", label: "Fig", border: "border border-transparent" },
+    { name: "Slack", bg: "bg-white", text: "text-[#E01E5A]", label: "S", border: "border border-transparent" },
+    { name: "Miro", bg: "bg-[#FFD02F]", text: "text-black", label: "M", border: "border border-transparent" },
+    { name: "ChatGPT", bg: "bg-[#10A37F]", text: "text-white", label: "GPT", border: "border border-transparent" },
+    { name: "Arc", bg: "bg-gradient-to-br from-[#FF4D4D] to-[#990000]", text: "text-white", label: "Arc", border: "border border-transparent" },
+    { name: "VS Code", bg: "bg-[#007ACC]", text: "text-white", label: "</>", border: "border border-transparent" },
+    { name: "Github", bg: "bg-[#181717]", text: "text-white", label: "GH", border: "border border-white/10" },
+    { name: "Linear", bg: "bg-[#5E6AD2]", text: "text-white", label: "Lin", border: "border border-transparent" }
+  ];
+
+  // Double the array for seamless infinite marquee scroll
+  const marqueeItems = [...tools, ...tools, ...tools];
+
+  return (
+    <section className="bg-[#0f0f0f] text-white font-dm py-16 overflow-hidden border-t border-white/5 m-4 md:m-8 rounded-3xl">
+      <div className="max-w-4xl mx-auto px-8 md:px-16 mb-12">
+        <h2 className="text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
+        <p className="text-sm text-white/50">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
+      </div>
+
+      <div className="relative w-full overflow-hidden flex">
+        {/* Left/Right Fade Masks */}
+        <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-gradient-to-r from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-gradient-to-l from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
+
+        <motion.div 
+          animate={{ x: ["0%", "-33.33%"] }}
+          transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+          className="flex gap-6 md:gap-10 px-4 w-max"
+        >
+          {marqueeItems.map((tool, i) => (
+            <div 
+              key={i} 
+              title={tool.name}
+              className={`w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex items-center justify-center rounded-2xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 cursor-pointer`}
+            >
+              {tool.label}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 export default function VariationWithCaseStudies() {
   return (
     <>
       <Variation9 />
       <CaseStudies />
       <Experience />
+      <ToolsStack />
       <Gallery />
       <Footer />
     </>
