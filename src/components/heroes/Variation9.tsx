@@ -321,16 +321,16 @@ function Gallery() {
 
 function ToolsStack() {
   const tools = [
-    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", border: "border border-white/10" },
-    { name: "Framer", bg: "bg-gradient-to-br from-[#0055FF] to-[#0033AA]", text: "text-white", label: "F", border: "border border-transparent" },
-    { name: "Figma", bg: "bg-[#2C2D33]", text: "text-[#F24E1E]", label: "Fig", border: "border border-transparent" },
-    { name: "Slack", bg: "bg-white", text: "text-[#E01E5A]", label: "S", border: "border border-transparent" },
-    { name: "Miro", bg: "bg-[#FFD02F]", text: "text-black", label: "M", border: "border border-transparent" },
-    { name: "ChatGPT", bg: "bg-[#10A37F]", text: "text-white", label: "GPT", border: "border border-transparent" },
-    { name: "Arc", bg: "bg-gradient-to-br from-[#FF4D4D] to-[#990000]", text: "text-white", label: "Arc", border: "border border-transparent" },
-    { name: "VS Code", bg: "bg-[#007ACC]", text: "text-white", label: "</>", border: "border border-transparent" },
-    { name: "Github", bg: "bg-[#181717]", text: "text-white", label: "GH", border: "border border-white/10" },
-    { name: "Linear", bg: "bg-[#5E6AD2]", text: "text-white", label: "Lin", border: "border border-transparent" }
+    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", image: "", border: "border border-white/10" },
+    { name: "Framer", bg: "bg-gradient-to-br from-[#0055FF] to-[#0033AA]", text: "text-white", label: "F", image: "", border: "border border-transparent" },
+    { name: "Figma", bg: "bg-[#2C2D33]", text: "text-[#F24E1E]", label: "Fig", image: "", border: "border border-transparent" },
+    { name: "Slack", bg: "bg-white", text: "text-[#E01E5A]", label: "S", image: "", border: "border border-transparent" },
+    { name: "Miro", bg: "bg-[#FFD02F]", text: "text-black", label: "M", image: "", border: "border border-transparent" },
+    { name: "ChatGPT", bg: "bg-[#10A37F]", text: "text-white", label: "GPT", image: "", border: "border border-transparent" },
+    { name: "Arc", bg: "bg-gradient-to-br from-[#FF4D4D] to-[#990000]", text: "text-white", label: "Arc", image: "", border: "border border-transparent" },
+    { name: "VS Code", bg: "bg-[#007ACC]", text: "text-white", label: "</>", image: "", border: "border border-transparent" },
+    { name: "Github", bg: "bg-[#181717]", text: "text-white", label: "GH", image: "", border: "border border-white/10" },
+    { name: "Linear", bg: "bg-[#5E6AD2]", text: "text-white", label: "Lin", image: "", border: "border border-transparent" }
   ];
 
   // Double the array for seamless infinite marquee scroll
@@ -357,9 +357,14 @@ function ToolsStack() {
             <div 
               key={i} 
               title={tool.name}
-              className={`w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex items-center justify-center rounded-2xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 cursor-pointer`}
+              style={{ width: '80px', height: '80px' }}
+              className={`flex-shrink-0 flex items-center justify-center rounded-[1.2rem] shadow-lg font-bold text-xl tracking-tighter overflow-hidden ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 cursor-pointer`}
             >
-              {tool.label}
+              {tool.image ? (
+                <img src={tool.image} alt={tool.name} className="w-full h-full object-cover" />
+              ) : (
+                tool.label
+              )}
             </div>
           ))}
         </motion.div>
