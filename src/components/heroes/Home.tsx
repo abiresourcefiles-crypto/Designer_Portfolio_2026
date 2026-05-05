@@ -73,8 +73,8 @@ function Variation9() {
 
   return (
     <div ref={heroRef} className="min-h-screen bg-white text-black flex items-center justify-center font-dm overflow-hidden border-[20px] border-[#DEDCD7]">
-      <div className="flex text-[15vw] font-bold leading-none tracking-tighter uppercase">
-        <div className="w-[18vw] flex justify-end">
+      <div className="flex flex-col md:flex-row text-[18vw] md:text-[15vw] font-bold leading-none tracking-tighter uppercase items-center justify-center">
+        <div className="w-[18vw] flex justify-center md:justify-end">
           <AnimatePresence mode="popLayout">
             <motion.span
               key={index}
@@ -88,7 +88,7 @@ function Variation9() {
             </motion.span>
           </AnimatePresence>
         </div>
-        <div className="ml-2">LEARN</div>
+        <div className="md:ml-2 mt-4 md:mt-0">LEARN</div>
       </div>
     </div>
   );
@@ -112,6 +112,7 @@ function CaseStudies() {
       image: "./Voice Case Study.jpg",
       link: "https://www.behance.net/gallery/247223671/Vision-20-Assistive-Tool-for-CVD-Medicos"
     },
+    /*
     {
       id: "X-990",
       title: "KINETIC UI",
@@ -128,20 +129,21 @@ function CaseStudies() {
       image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop",
       link: "/static-os"
     }
+    */
   ];
 
   return (
-    <section className="bg-black text-white font-dm py-32 px-12 md:px-24">
+    <section className="bg-black text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-20">
-          <h2 className="text-4xl font-bold tracking-tight mb-4 uppercase">Recent Works</h2>
-          <div className="w-12 h-1 bg-white opacity-20"></div>
+        <div className="mb-12 md:mb-20">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 uppercase">Recent Works</h2>
+          <div className="w-12 h-1 bg-white opacity-60"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
           {projects.map((p, i) => (
-            <a href={p.link} target="_blank" rel="noopener noreferrer" key={i} className="group block cursor-pointer">
-              <div className="aspect-[16/10] bg-[#111] mb-8 overflow-hidden rounded-sm">
+            <a href={p.link} target="_blank" rel="noopener noreferrer" key={i} className="group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-white rounded-sm p-2 -m-2 transition-all">
+              <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm">
                 <img
                   src={p.image}
                   alt={p.title}
@@ -149,9 +151,9 @@ function CaseStudies() {
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
-              <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-sm">{p.desc}</p>
-              <div className="inline-block px-6 py-3 border border-white/20 text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
+              <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
+              <p className="text-white/70 text-sm mb-6 md:mb-8 leading-relaxed max-w-sm">{p.desc}</p>
+              <div className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
                 View Case Study
               </div>
             </a>
@@ -180,44 +182,44 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-white font-dm py-48 px-8 overflow-hidden text-center">
+    <footer className="bg-black text-white font-dm py-24 md:py-48 px-6 md:px-8 overflow-hidden text-center">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="text-[12px] font-bold uppercase tracking-[0.4em] opacity-30 mb-8 italic">The final chapter.</div>
-          <h2 className="text-4xl md:text-7xl font-bold tracking-tight mb-16 leading-[1.1]">
+          <div className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
+          <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
             From visuals to products. <br /> Let’s create what’s next.
           </h2>
 
           <button
             onClick={copyEmail}
-            className="group relative inline-flex items-center gap-4 px-12 py-6 bg-white text-black font-bold uppercase text-xs tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden"
+            className="group relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
           >
             <span className="relative z-10">{copied ? "Copied" : "abhishekdesignspace@gmail.com"}</span>
-            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-30 group-hover:opacity-100 transition-opacity" />}
+            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />}
           </button>
         </motion.div>
 
-        <div className="mt-32 flex flex-col items-center gap-16">
-          <div className="flex gap-12">
+        <div className="mt-24 md:mt-32 flex flex-col items-center gap-12 md:gap-16">
+          <div className="flex gap-8 md:gap-12">
             {socials.map((social, i) => (
               <a
                 key={i}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-20 hover:opacity-100 transition-all transform hover:scale-125"
-                aria-label="Social Link"
+                className="opacity-60 hover:opacity-100 transition-all transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white p-2 rounded-sm"
+                aria-label={`Visit Social Link ${i + 1}`}
               >
-                <social.icon className="w-6 h-6" />
+                <social.icon className="w-5 h-5 md:w-6 md:h-6" />
               </a>
             ))}
           </div>
 
-          <div className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-10">
+          <div className="text-[11px] font-bold uppercase tracking-[0.5em] opacity-40">
             © 2026  <br></br>
             <br></br>
             <br></br>
@@ -231,49 +233,44 @@ function Footer() {
 function Experience() {
   const experiences = [
     {
-      date: "JAN 26 - MAR 26",
-      role: "Product Designer at SuperAlign",
+      date: "AUG 24 - MAR 26",
+      role: "Product Designer @ Mercemur Technologies (ZEMURIA)",
       desc: "Designing Products for AI Agents & Security"
     },
     {
-      date: "OCT 25 - JAN 26",
-      role: "Product Designer at Quarlatis",
+      date: "SEP 23 - MAY 24",
+      role: "UX UI Designer at e-Brahma",
       desc: "Made end-to-end seamless experiences in the world of Web3 & Blockchain"
     },
     {
-      date: "JUN 25 - AUG 25",
-      role: "Visual Designer at Moonkraft Studio",
+      date: "MAY 23 - SEP 23",
+      role: "UI/UX Designer Trainee at e-Brahma",
       desc: "Made things pretty, somehow it worked. Clients smiled, I cried only a little."
     },
     {
-      date: "FEB 25 - APR 25",
-      role: "Product Designer at Guide U",
-      desc: "Worked on Browser Extension based SaaS from scratch."
+      date: "JAN 21 - JUN 21",
+      role: "Graphic Designer Intern at Simmi Foundation",
+      desc: "Made things pretty, somehow it worked. Clients smiled, I cried only a little."
     },
-    {
-      date: "DEC 24 - NOW",
-      role: "Freelance Product Designer",
-      desc: "Freelancing, aka professionally 'winging it'"
-    }
   ];
 
   return (
-    <section className="bg-[#0a0a0a] text-white font-dm py-32 px-12 md:px-24">
+    <section className="bg-[#0a0a0a] text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-20">
-          <h2 className="text-sm font-bold tracking-widest mb-6 uppercase text-white/40">Experience</h2>
-          <p className="text-xl md:text-2xl text-white/70">somehow convinced real people to trust me with their products</p>
+        <div className="mb-12 md:mb-20">
+          <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 uppercase text-white/60">Experience</h2>
+          <p className="text-lg md:text-2xl text-white/80">somehow convinced real people to trust me with their products</p>
         </div>
 
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-12 md:gap-16">
           {experiences.map((exp, i) => (
-            <div key={i} className="flex flex-col md:flex-row md:items-start gap-4 md:gap-16">
-              <div className="md:w-1/4 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40 pt-1">
+            <div key={i} className="flex flex-col md:flex-row md:items-start gap-2 md:gap-16 focus-within:ring-2 focus-within:ring-white/20 p-2 -m-2 rounded-sm transition-all">
+              <div className="md:w-1/4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/60 md:pt-1">
                 {exp.date}
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-bold mb-2 tracking-tight">{exp.role}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{exp.desc}</p>
+                <h3 className="text-lg md:text-xl font-bold mb-2 tracking-tight">{exp.role}</h3>
+                <p className="text-white/70 text-[13px] md:text-sm leading-relaxed">{exp.desc}</p>
               </div>
             </div>
           ))}
@@ -293,22 +290,23 @@ function Gallery() {
   ];
 
   return (
-    <section className="bg-[#050505] text-white font-dm pt-32 pb-16 overflow-hidden relative border-t border-white/5">
-      <div className="max-w-4xl mx-auto px-12 md:px-24 mb-24">
-        <h2 className="text-sm font-bold tracking-widest mb-6 uppercase text-white/40">Life & Culture</h2>
-        <p className="text-xl md:text-2xl text-white/70">Behind the scenes.</p>
+    <section className="bg-[#050505] text-white font-dm pt-20 pb-12 md:pt-32 md:pb-16 overflow-hidden relative border-t border-white/10">
+      <div className="max-w-4xl mx-auto px-6 md:px-24 mb-12 md:mb-24">
+        <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 uppercase text-white/60">Life & Culture</h2>
+        <p className="text-lg md:text-2xl text-white/80">Behind the scenes.</p>
       </div>
 
-      <div className="flex justify-center items-center px-4 h-48 md:h-72 mt-12 group">
+      <div className="flex flex-wrap justify-center items-center gap-4 px-4 h-auto md:h-72 mt-8 md:mt-12 group">
         {photos.map((photo, i) => (
           <div
             key={i}
-            className={`relative w-28 md:w-56 aspect-[4/5] -mx-4 md:-mx-8 border-[6px] md:border-8 border-white bg-white shadow-2xl rounded-sm transition-all duration-500 hover:z-50 hover:-translate-y-12 hover:scale-110 hover:rotate-0 cursor-pointer ${photo.rot}`}
+            tabIndex={0}
+            className={`relative w-24 h-32 md:h-auto md:w-56 aspect-[4/5] md:-mx-8 border-[4px] md:border-8 border-white bg-white shadow-2xl rounded-sm transition-all duration-500 hover:z-50 hover:-translate-y-4 md:hover:-translate-y-12 hover:scale-110 hover:rotate-0 focus:z-50 focus:scale-110 focus:rotate-0 focus:outline-none cursor-pointer ${photo.rot}`}
           >
             <div className="w-full h-full overflow-hidden">
               <img
                 src={photo.src}
-                alt="Gallery"
+                alt={`Culture and Life gallery moment ${i + 1}`}
                 className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
               />
             </div>
@@ -321,7 +319,7 @@ function Gallery() {
 
 function ToolsStack() {
   const tools = [
-    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", image: "", border: "border border-white/10" },
+    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", image: "./icons 01.png", border: "border border-white/10" },
     { name: "Framer", bg: "bg-gradient-to-br from-[#0055FF] to-[#0033AA]", text: "text-white", label: "F", image: "", border: "border border-transparent" },
     { name: "Figma", bg: "bg-[#2C2D33]", text: "text-[#F24E1E]", label: "Fig", image: "", border: "border border-transparent" },
     { name: "Slack", bg: "bg-white", text: "text-[#E01E5A]", label: "S", image: "", border: "border border-transparent" },
@@ -337,39 +335,39 @@ function ToolsStack() {
   const marqueeItems = [...tools, ...tools, ...tools];
 
   return (
-    <section className="bg-[#0f0f0f] text-white font-dm py-16 overflow-hidden border-t border-white/5 m-4 md:m-8 rounded-3xl">
-      <div className="max-w-4xl mx-auto px-8 md:px-16 mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
-        <p className="text-sm text-white/50">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
+    <section className="bg-[#0f0f0f] text-white font-dm py-12 md:py-16 overflow-hidden border-t border-white/10 m-2 md:m-8 rounded-2xl md:rounded-3xl">
+      <div className="max-w-4xl mx-auto px-6 md:px-16 mb-8 md:mb-12">
+        <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
+        <p className="text-[11px] md:text-sm text-white/70">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
       </div>
 
       <div className="relative w-full overflow-hidden flex">
         {/* Left/Right Fade Masks */}
-        <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-gradient-to-r from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-gradient-to-l from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-16 md:w-48 h-full bg-gradient-to-r from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-16 md:w-48 h-full bg-gradient-to-l from-[#0f0f0f] to-transparent z-10 pointer-events-none"></div>
 
-        <motion.div 
+        <motion.div
           animate={{ x: ["0%", "-33.33%"] }}
           transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-          className="flex gap-6 md:gap-10 px-4 w-max"
+          className="flex gap-4 md:gap-10 px-4 w-max"
         >
           {marqueeItems.map((tool, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               title={tool.name}
-              style={{ width: '80px', height: '80px' }}
-              className={`flex-shrink-0 flex items-center justify-center rounded-[1.2rem] shadow-lg font-bold text-xl tracking-tighter overflow-hidden ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 cursor-pointer`}
+              tabIndex={0}
+              className={`w-14 h-14 md:w-[80px] md:h-[80px] flex-shrink-0 flex items-center justify-center rounded-xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter overflow-hidden ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer`}
             >
               {tool.image ? (
-                <img src={tool.image} alt={tool.name} className="w-full h-full object-cover" />
+                <img src={tool.image} alt={`${tool.name} Logo`} className="w-full h-full object-cover" />
               ) : (
                 tool.label
               )}
             </div>
           ))}
         </motion.div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
 

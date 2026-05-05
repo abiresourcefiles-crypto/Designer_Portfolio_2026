@@ -1,4 +1,4 @@
-import Variation9 from './components/heroes/Variation9';
+import Variation9 from './components/heroes/Home';
 
 export default function App() {
   return (
