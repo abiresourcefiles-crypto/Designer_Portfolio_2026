@@ -319,16 +319,14 @@ function Gallery() {
 
 function ToolsStack() {
   const tools = [
-    { name: "Notion", bg: "bg-gradient-to-br from-[#2a2a2a] to-[#111]", text: "text-[#DEDCD7]", label: "N", image: "./icons 01.png", border: "border border-white/10" },
-    { name: "Framer", bg: "bg-gradient-to-br from-[#0055FF] to-[#0033AA]", text: "text-white", label: "F", image: "", border: "border border-transparent" },
-    { name: "Figma", bg: "bg-[#2C2D33]", text: "text-[#F24E1E]", label: "Fig", image: "", border: "border border-transparent" },
-    { name: "Slack", bg: "bg-white", text: "text-[#E01E5A]", label: "S", image: "", border: "border border-transparent" },
-    { name: "Miro", bg: "bg-[#FFD02F]", text: "text-black", label: "M", image: "", border: "border border-transparent" },
-    { name: "ChatGPT", bg: "bg-[#10A37F]", text: "text-white", label: "GPT", image: "", border: "border border-transparent" },
-    { name: "Arc", bg: "bg-gradient-to-br from-[#FF4D4D] to-[#990000]", text: "text-white", label: "Arc", image: "", border: "border border-transparent" },
-    { name: "VS Code", bg: "bg-[#007ACC]", text: "text-white", label: "</>", image: "", border: "border border-transparent" },
-    { name: "Github", bg: "bg-[#181717]", text: "text-white", label: "GH", image: "", border: "border border-white/10" },
-    { name: "Linear", bg: "bg-[#5E6AD2]", text: "text-white", label: "Lin", image: "", border: "border border-transparent" }
+    { name: "Notion", text: "text-white", image: "./NOTION.png", border: "border border-transparent" },
+    { name: "Framer", text: "text-white", image: "./FRAMER.png", border: "border border-transparent" },
+    { name: "Figma", text: "text-[#F24E1E]", image: "./FIGMA.png", border: "border border-transparent" },
+    { name: "Adobe Photoshop", text: "text-black", image: "./PS.png", border: "border border-transparent" },
+    { name: "Adobe Illustrator", text: "text-white", image: "./AI.png", border: "border border-transparent" },
+    { name: "Antigravity", text: "text-white", image: "./ANTIGRAVITY.png", border: "border border-transparent" },
+    { name: "Cursor", text: "text-white", image: "./CURSOR.png", border: "border border-transparent" },
+    { name: "Claude", text: "text-white", image: "./CLAUDE.png", border: "border border-transparent" },
   ];
 
   // Double the array for seamless infinite marquee scroll
@@ -371,10 +369,41 @@ function ToolsStack() {
   );
 }
 
+function AboutMe() {
+  return (
+    <section className="bg-white text-black font-dm py-20 md:py-32 px-6 md:px-24 border-t border-black/10">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-black/40 mb-6">About Me</p>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
+            Designer<br />who<br />thinks.
+          </h2>
+          <div className="w-12 h-[2px] bg-black mt-8 opacity-20" />
+        </div>
+        <div className="md:pt-16">
+          <p className="text-base md:text-lg text-black/70 leading-relaxed mb-8">
+            Hi, I&apos;m Abhishek — a Product Designer based in India with 2+ years of crafting digital products at the intersection of clarity, motion, and human behaviour.
+          </p>
+          <p className="text-sm text-black/50 leading-relaxed mb-10">
+            I enjoy simplifying complex systems and shaping them into experiences that feel clear and natural to use. My work includes building scalable design systems, refining user flows, and turning research insights into thoughtful wireframes and prototypes. With a personal lens on color accessibility, I pay extra attention to inclusive design,
+            contrast clarity, and real-world usability. I approach every project with curiosity, iteration, and collaboration,
+            making sure design decisions support both user needs and business goals
+          </p>
+          <div className="flex flex-wrap gap-4 text-[11px] font-bold uppercase tracking-widest">
+            <span className="border border-black/20 px-4 py-2">2+ Years</span>
+            <span className="border border-black/20 px-4 py-2">Product Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function VariationWithCaseStudies() {
   return (
     <>
       <Variation9 />
+      <AboutMe />
       <CaseStudies />
       <Experience />
       <ToolsStack />

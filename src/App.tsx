@@ -1,6 +1,14 @@
+import { useEffect } from 'react';
 import Variation9 from './components/heroes/Home';
 
 export default function App() {
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-white text-black font-dm selection:bg-black selection:text-white flex flex-col">
       {/* Editorial Navigation */}
