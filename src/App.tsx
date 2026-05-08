@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Variation9 from './components/heroes/Home';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   useEffect(() => {
@@ -15,9 +16,9 @@ export default function App() {
       <nav className="w-full h-20 px-10 flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white">
         <div className="text-[12px] font-bold uppercase tracking-[0.15em]">ABHISHEK / Product Designer</div>
         <div className="flex gap-10 text-[11px] font-bold uppercase tracking-[0.15em]">
-          <a href="https://medium.com/@abhishekdesignspace" target="_blank" rel="noopener noreferrer" className="hover:opacity-40 transition-opacity">Writings</a>
-          <a href="#" className="hover:opacity-40 transition-opacity">Studio</a>
-          <a href="#" className="hover:opacity-40 transition-opacity">Contact</a>
+          <a href="https://medium.com/@abhishekdesignspace" target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4 decoration-2 transition-all">Writings</a>
+          <a href="#" className="hover:underline underline-offset-4 decoration-2 transition-all">Studio</a>
+          <a href="#" className="hover:underline underline-offset-4 decoration-2 transition-all">Contact</a>
         </div>
       </nav>
 
@@ -25,6 +26,7 @@ export default function App() {
       <main className="flex-1 relative flex flex-col">
         <Variation9 />
       </main>
+      <Analytics />
     </div>
   );
 }

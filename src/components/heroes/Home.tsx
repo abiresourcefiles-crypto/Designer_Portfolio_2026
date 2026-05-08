@@ -2,7 +2,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
 import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail } from 'lucide-react';
 
-function Variation9() {
+const bio = "I enjoy simplifying complex systems into experiences that feel clear and natural. My work spans scalable design systems, refined user flows, and research-driven prototypes always with a focus on clarity, accessibility, and real usability.";
+
+function HeroSection() {
   const [index, setIndex] = useState(0);
   const words = ["Un", "Re", ""];
   const heroRef = useRef<HTMLDivElement>(null);
@@ -10,10 +12,8 @@ function Variation9() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible.current = entry.isIntersecting;
-      },
-      { threshold: 0.1 } // triggers when at least 10% of hero is visible
+      ([entry]) => { isVisible.current = entry.isIntersecting; },
+      { threshold: 0.1 }
     );
     if (heroRef.current) observer.observe(heroRef.current);
     return () => observer.disconnect();
@@ -21,60 +21,46 @@ function Variation9() {
 
   useEffect(() => {
     let audioCtx: AudioContext | null = null;
-
     const playBeat = () => {
       try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
+        if (!audioCtx) audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-
-        // Deep, subtle thud/heartbeat
         osc.type = 'sine';
         osc.frequency.setValueAtTime(80, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.1);
-
-        // Very low volume, quick fade out
         gain.gain.setValueAtTime(0, audioCtx.currentTime);
         gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-
         osc.start(audioCtx.currentTime);
         osc.stop(audioCtx.currentTime + 0.1);
-      } catch (e) {
-        // Silently fail if browser blocks audio before interaction
-      }
+      } catch (_) { }
     };
-
     const timer = setInterval(() => {
-      setIndex((prev) => {
+      setIndex(prev => {
         const next = (prev + 1) % words.length;
-        if (next !== 2 && isVisible.current) { // Only play beat when text is actually appearing and hero is visible
-          playBeat();
-        }
+        if (next !== 2 && isVisible.current) playBeat();
         return next;
       });
     }, 1000);
-
     return () => {
       clearInterval(timer);
-      if (audioCtx && audioCtx.state !== 'closed') {
-        audioCtx.close();
-      }
+      if (audioCtx && audioCtx.state !== 'closed') audioCtx.close();
     };
   }, []);
 
   return (
-    <div ref={heroRef} className="min-h-screen bg-white text-black flex items-center justify-center font-dm overflow-hidden border-[20px] border-[#DEDCD7]">
-      <div className="flex flex-col md:flex-row text-[18vw] md:text-[15vw] font-bold leading-none tracking-tighter uppercase items-center justify-center">
-        <div className="w-[18vw] flex justify-center md:justify-end">
+    <div
+      ref={heroRef}
+      className="min-h-screen bg-[#F5F4F0] text-black font-dm flex flex-col items-center justify-center gap-10 px-8 text-center"
+    >
+      {/* Animated prefix — fixed width so LEARN never shifts */}
+      <div className="text-[20vw] md:text-[14vw] font-bold leading-none tracking-tighter uppercase flex items-center select-none">
+        {/* Fixed-width slot: sized to the widest prefix "Re"/"Un" */}
+        <div className="relative inline-flex items-center justify-end" style={{ width: "18vw", minWidth: "18vw" }}>
           <AnimatePresence mode="popLayout">
             <motion.span
               key={index}
@@ -82,17 +68,36 @@ function Variation9() {
               animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
               exit={{ filter: "blur(20px)", opacity: 0, scale: 0.5 }}
               transition={{ duration: 0.4 }}
-              className="text-black"
+              className="text-black absolute right-0"
             >
               {words[index]}
             </motion.span>
           </AnimatePresence>
         </div>
-        <div className="md:ml-2 mt-4 md:mt-0">LEARN</div>
+        {/* LEARN never moves — always anchored */}
+        <span className="text-black">LEARN</span>
+      </div>
+
+      {/* About — inline below the animation */}
+      <div className="max-w-xl">
+        <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-black/40 mb-4">
+          Abhishek &middot; Product Designer &middot; India
+        </p>
+        <p className="text-base text-black/60 leading-relaxed">{bio}</p>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap justify-center gap-3">
+        {["2+ Years", "Product Design", "India"].map(t => (
+          <span key={t} className="border border-black/30 px-4 py-2 text-[11px] font-bold uppercase tracking-widest">
+            {t}
+          </span>
+        ))}
       </div>
     </div>
   );
 }
+
 
 function CaseStudies() {
   const projects = [
@@ -142,21 +147,25 @@ function CaseStudies() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
           {projects.map((p, i) => (
-            <a href={p.link} target="_blank" rel="noopener noreferrer" key={i} className="group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-white rounded-sm p-2 -m-2 transition-all">
-              <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+            <div key={i} className="flex flex-col h-full justify-between rounded-sm p-2 -m-2 transition-all">
+              <div>
+                <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed mb-6 md:mb-8">{p.desc}</p>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
-              <p className="text-white/70 text-sm mb-6 md:mb-8 leading-relaxed max-w-sm">{p.desc}</p>
-              <div className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
-                View Case Study
+              <div>
+                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold uppercase tracking-widest hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white transition-all cursor-pointer">
+                  View Case Study
+                </a>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>
@@ -354,13 +363,9 @@ function ToolsStack() {
               key={i}
               title={tool.name}
               tabIndex={0}
-              className={`w-14 h-14 md:w-[80px] md:h-[80px] flex-shrink-0 flex items-center justify-center rounded-xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter overflow-hidden ${tool.bg} ${tool.text} ${tool.border} transition-transform hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer`}
+              className={`w-14 h-14 md:w-[80px] md:h-[80px] flex-shrink-0 flex items-center justify-center rounded-xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter overflow-hidden ${tool.text} ${tool.border} transition-transform hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer`}
             >
-              {tool.image ? (
-                <img src={tool.image} alt={`${tool.name} Logo`} className="w-full h-full object-cover" />
-              ) : (
-                tool.label
-              )}
+              <img src={tool.image} alt={`${tool.name} Logo`} className="w-full h-full object-cover" />
             </div>
           ))}
         </motion.div>
@@ -369,41 +374,12 @@ function ToolsStack() {
   );
 }
 
-function AboutMe() {
-  return (
-    <section className="bg-white text-black font-dm py-20 md:py-32 px-6 md:px-24 border-t border-black/10">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-black/40 mb-6">About Me</p>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-            Designer<br />who<br />thinks.
-          </h2>
-          <div className="w-12 h-[2px] bg-black mt-8 opacity-20" />
-        </div>
-        <div className="md:pt-16">
-          <p className="text-base md:text-lg text-black/70 leading-relaxed mb-8">
-            Hi, I&apos;m Abhishek — a Product Designer based in India with 2+ years of crafting digital products at the intersection of clarity, motion, and human behaviour.
-          </p>
-          <p className="text-sm text-black/50 leading-relaxed mb-10">
-            I enjoy simplifying complex systems and shaping them into experiences that feel clear and natural to use. My work includes building scalable design systems, refining user flows, and turning research insights into thoughtful wireframes and prototypes. With a personal lens on color accessibility, I pay extra attention to inclusive design,
-            contrast clarity, and real-world usability. I approach every project with curiosity, iteration, and collaboration,
-            making sure design decisions support both user needs and business goals
-          </p>
-          <div className="flex flex-wrap gap-4 text-[11px] font-bold uppercase tracking-widest">
-            <span className="border border-black/20 px-4 py-2">2+ Years</span>
-            <span className="border border-black/20 px-4 py-2">Product Design</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+
 
 export default function VariationWithCaseStudies() {
   return (
     <>
-      <Variation9 />
-      <AboutMe />
+      <HeroSection />
       <CaseStudies />
       <Experience />
       <ToolsStack />
