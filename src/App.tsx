@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Variation9 from './components/heroes/Home';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
       <main className="flex-1 relative flex flex-col">
         <Variation9 />
       </main>
+      <Analytics />
     </div>
   );
 }
