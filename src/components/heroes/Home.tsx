@@ -455,22 +455,29 @@ function Footer() {
 
 // Separate arrays for easy adding/removing of images
 export const horizontalImages = [
-  "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1481481600465-42004245b0d0?w=800&auto=format&fit=crop&q=60"
+  "/img1.jpg",
+  "/img2.jpg",
+  "/img3.jpg",
+  "/img4.jpg",
+  "/img5.jpg",
+  "/img6.jpg",
+  "/img7.jpg",
+  "/img8.jpg",
+  "/img9.jpg",
+  "/img10.jpg",
+  "/img11.jpg",
+  "/img12.jpg",
+  "/img13.jpg",
+  "/img14.JPG",
+  "/img15.jpg",
+  "/img16.jpg",
 ];
 
 export const verticalImages = [
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=60"
+  "/imgv1.jpg",
+  "/imgv2.jpg",
+  "/imgv3.jpg",
+  "/imgv4.JPG",
 ];
 
 // Mix and match them for the two strips
@@ -479,29 +486,45 @@ const strip1Photos = [
   { src: verticalImages[0], type: 'vertical' },
   { src: horizontalImages[1], type: 'horizontal' },
   { src: horizontalImages[2], type: 'horizontal' },
-  { src: verticalImages[1], type: 'vertical' },
   { src: horizontalImages[3], type: 'horizontal' },
-  { src: verticalImages[5], type: 'vertical' },
+  { src: verticalImages[1], type: 'vertical' },
   { src: horizontalImages[4], type: 'horizontal' },
-  { src: verticalImages[2], type: 'vertical' },
   { src: horizontalImages[5], type: 'horizontal' },
   { src: horizontalImages[6], type: 'horizontal' },
+  { src: verticalImages[2], type: 'vertical' },
+  { src: horizontalImages[7], type: 'horizontal' },
+  { src: horizontalImages[8], type: 'horizontal' },
+  { src: horizontalImages[9], type: 'horizontal' },
   { src: verticalImages[3], type: 'vertical' },
+  { src: horizontalImages[10], type: 'horizontal' },
+  { src: horizontalImages[11], type: 'horizontal' },
+  { src: horizontalImages[12], type: 'horizontal' },
+  { src: horizontalImages[13], type: 'horizontal' },
+  { src: horizontalImages[14], type: 'horizontal' },
+  { src: horizontalImages[15], type: 'horizontal' },
 ];
 
 const strip2Photos = [
-  { src: verticalImages[2], type: 'vertical' },
-  { src: horizontalImages[4], type: 'horizontal' },
-  { src: horizontalImages[5], type: 'horizontal' },
+  { src: horizontalImages[14], type: 'horizontal' },
+  { src: horizontalImages[13], type: 'horizontal' },
+  { src: horizontalImages[12], type: 'horizontal' },
   { src: verticalImages[3], type: 'vertical' },
+  { src: horizontalImages[11], type: 'horizontal' },
+  { src: horizontalImages[10], type: 'horizontal' },
+  { src: horizontalImages[9], type: 'horizontal' },
+  { src: horizontalImages[15], type: 'horizontal' },
+  { src: verticalImages[2], type: 'vertical' },
+  { src: horizontalImages[8], type: 'horizontal' },
+  { src: horizontalImages[7], type: 'horizontal' },
   { src: horizontalImages[6], type: 'horizontal' },
-  { src: verticalImages[4], type: 'vertical' },
-  { src: horizontalImages[0], type: 'horizontal' },
-  { src: verticalImages[5], type: 'vertical' },
-  { src: horizontalImages[1], type: 'horizontal' },
-  { src: horizontalImages[2], type: 'horizontal' },
-  { src: verticalImages[0], type: 'vertical' },
+  { src: verticalImages[1], type: 'vertical' },
+  { src: horizontalImages[5], type: 'horizontal' },
+  { src: horizontalImages[4], type: 'horizontal' },
   { src: horizontalImages[3], type: 'horizontal' },
+  { src: verticalImages[0], type: 'vertical' },
+  { src: horizontalImages[2], type: 'horizontal' },
+  { src: horizontalImages[1], type: 'horizontal' },
+  { src: horizontalImages[0], type: 'horizontal' },
 ];
 
 function Gallery() {
@@ -527,20 +550,20 @@ function Gallery() {
       <div className="w-full flex flex-col gap-16 md:gap-24 overflow-hidden relative pt-10 pb-16">
 
         {/* Strip 1: Right to Left */}
-        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative rotate-2">
+        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative rotate-2 bg-[#161616] py-8 md:py-12">
+          {/* Top Sprocket Holes */}
+          <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80 z-10" />
+          {/* Bottom Sprocket Holes */}
+          <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80 z-10" />
+
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 45, repeat: Infinity }}
-            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max py-8 md:py-12 relative bg-[#161616]"
+            transition={{ ease: "linear", duration: 100, repeat: Infinity }}
+            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max relative"
           >
-            {/* Top Sprocket Holes */}
-            <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
-            {/* Bottom Sprocket Holes */}
-            <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
-
             {roll1.map((p, i) => (
               <div key={i} className={`relative h-full flex-shrink-0 ${p.type === 'horizontal' ? 'aspect-[3/2]' : 'aspect-[2/3]'}`}>
-                <img src={p.src} className="w-full h-full object-cover filter contrast-125 transition-all duration-500" />
+                <img src={p.src} className="w-full h-full object-cover transition-all duration-500" style={{ filter: "sepia(40%) contrast(115%) brightness(90%) saturate(120%) hue-rotate(-10deg)" }} />
                 <div className="absolute -bottom-6 md:-bottom-8 left-0 text-[#f0f0f0] text-[8px] md:text-[10px] font-mono tracking-widest opacity-50 whitespace-nowrap">
                   KODAK PORTRA 400 • {i + 1}A
                 </div>
@@ -550,20 +573,20 @@ function Gallery() {
         </div>
 
         {/* Strip 2: Left to Right */}
-        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative -rotate-2">
+        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative -rotate-2 bg-[#161616] py-8 md:py-12">
+          {/* Top Sprocket Holes */}
+          <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80 z-10" />
+          {/* Bottom Sprocket Holes */}
+          <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80 z-10" />
+
           <motion.div
             animate={{ x: ["-50%", "0%"] }}
-            transition={{ ease: "linear", duration: 40, repeat: Infinity }}
-            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max py-8 md:py-12 relative bg-[#161616]"
+            transition={{ ease: "linear", duration: 85, repeat: Infinity }}
+            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max relative"
           >
-            {/* Top Sprocket Holes */}
-            <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
-            {/* Bottom Sprocket Holes */}
-            <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
-
             {roll2.map((p, i) => (
               <div key={i} className={`relative h-full flex-shrink-0 ${p.type === 'horizontal' ? 'aspect-[3/2]' : 'aspect-[2/3]'}`}>
-                <img src={p.src} className="w-full h-full object-cover filter contrast-125 transition-all duration-500" />
+                <img src={p.src} className="w-full h-full object-cover transition-all duration-500" style={{ filter: "sepia(40%) contrast(115%) brightness(90%) saturate(120%) hue-rotate(-10deg)" }} />
                 <div className="absolute -bottom-6 md:-bottom-8 right-0 text-[#f0f0f0] text-[8px] md:text-[10px] font-mono tracking-widest opacity-50 whitespace-nowrap">
                   ILFORD HP5 • {i + 12}
                 </div>

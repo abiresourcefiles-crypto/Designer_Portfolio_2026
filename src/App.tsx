@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Variation9 from "./components/heroes/Home";
 import About from "./components/About";
 import { Analytics } from "@vercel/analytics/react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState(() => {
+    return sessionStorage.getItem('portfolioCurrentPage') || 'home';
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('portfolioCurrentPage', currentPage);
+
+    // Handle scroll position on refresh
+    if ('scrollRestoration' in history) {
+      if (currentPage === 'home') {
+        history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+      } else {
+        history.scrollRestoration = 'auto';
+      }
+    }
+  }, [currentPage]);
   const [isOpeningResume, setIsOpeningResume] = useState(false);
 
   const handleResumeClick = () => {
