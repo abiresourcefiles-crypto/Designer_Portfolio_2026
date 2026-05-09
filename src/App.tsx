@@ -1,23 +1,60 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Variation9 from "./components/heroes/Home";
+import About from "./components/About";
 import { Analytics } from "@vercel/analytics/react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [isOpeningResume, setIsOpeningResume] = useState(false);
+
+  const handleResumeClick = () => {
+    setIsOpeningResume(true);
+    setTimeout(() => {
+      window.open("https://drive.google.com/file/d/1_REbzPqSZqnhBweCx8GncyX-PcG6Fd-q/view?usp=sharing", "_blank");
+      setTimeout(() => setIsOpeningResume(false), 100); // fade out shortly after opening
+    }, 350);
+  };
+
   return (
     <div className="relative min-h-screen bg-white text-black font-dm selection:bg-black selection:text-white flex flex-col">
+      
+      {/* Resume Loading Overlay */}
+      <AnimatePresence>
+        {isOpeningResume && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[100] bg-white text-black flex flex-col items-center justify-center font-dm"
+          >
+            <motion.div
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.05, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-4"
+            >
+              <div className="w-2 h-2 rounded-full bg-black animate-ping"></div>
+              <span className="text-xl md:text-2xl font-bold tracking-widest uppercase">Opening Resume</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Editorial Navigation */}
-      <motion.nav 
+      <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="w-full h-20 px-10 flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white"
       >
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="w-[56px] h-[56px] flex items-center justify-center"
+          onClick={() => setCurrentPage('home')}
+          className="w-[56px] h-[56px] flex items-center justify-center cursor-pointer"
         >
           <svg viewBox="0 0 424 288" fill="none" className="w-full h-full object-contain" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_2133_570)">
@@ -31,7 +68,7 @@ export default function App() {
           </svg>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={{
@@ -41,20 +78,27 @@ export default function App() {
           className="flex gap-10 text-[14px] font-medium"
         >
           {[
+            { name: "about", action: () => setCurrentPage('about') },
             { name: "writings", url: "https://medium.com/@abhishekdesignspace", blank: true },
-            { name: "resume", url: "#", blank: false },
-            { name: "contact", url: "#", blank: false }
+            { name: "resume", action: handleResumeClick },
+            { name: "contact", action: () => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
           ].map((item) => (
-            <motion.a 
+            <motion.a
               key={item.name}
               variants={{
                 hidden: { opacity: 0, y: 10 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
               }}
-              href={item.url} 
-              target={item.blank ? "_blank" : "_self"} 
-              rel={item.blank ? "noopener noreferrer" : ""} 
-              className="group relative pb-1 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              href={item.url || "#"}
+              target={item.blank ? "_blank" : "_self"}
+              rel={item.blank ? "noopener noreferrer" : ""}
+              onClick={(e) => {
+                if (item.action) {
+                  e.preventDefault();
+                  item.action();
+                }
+              }}
+              className="group relative pb-1 opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
             >
               <span className="relative z-10">{item.name}</span>
               <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-left scale-x-0 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-x-100" />
@@ -65,7 +109,7 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 relative flex flex-col">
-        <Variation9 />
+        {currentPage === 'home' ? <Variation9 /> : <About />}
       </main>
       <Analytics />
     </div>

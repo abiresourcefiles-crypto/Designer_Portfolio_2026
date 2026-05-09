@@ -59,63 +59,64 @@ function HeroSection() {
   return (
     <div
       ref={heroRef}
-      className="min-h-screen bg-[#F5F4F0] text-black font-dm flex flex-col items-center justify-center gap-10 px-8 text-center"
+      className="min-h-[calc(100vh-80px)] bg-[#F5F4F0] text-black font-dm flex flex-col items-start justify-center px-6 md:px-24 text-left py-12 w-full"
     >
-      {/* Animated prefix — fixed width so LEARN never shifts */}
-      <div className="text-[20vw] md:text-[14vw] font-bold leading-none tracking-tighter uppercase flex items-center select-none">
-        {/* Fixed-width slot: sized to the widest prefix "Re"/"Un" */}
-        <div className="relative inline-flex items-center justify-end" style={{ width: "18vw", minWidth: "18vw" }}>
-          <AnimatePresence mode="popLayout">
-            <motion.span
-              key={index}
-              initial={{ filter: "blur(20px)", opacity: 0, scale: 2 }}
-              animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
-              exit={{ filter: "blur(20px)", opacity: 0, scale: 0.5 }}
-              transition={{ duration: 0.4 }}
-              className="text-black absolute right-0"
-            >
-              {words[index]}
-            </motion.span>
-          </AnimatePresence>
+      <div className="w-full max-w-6xl mx-auto flex flex-col gap-10">
+        {/* Animated prefix — fixed width so LEARN never shifts */}
+        <div className="text-[20vw] md:text-[14vw] font-bold leading-none tracking-tighter uppercase flex items-center select-none -ml-4 md:-ml-8">
+          {/* Fixed-width slot: sized to the widest prefix "Re"/"Un" */}
+          <div className="relative inline-flex items-center justify-end" style={{ width: "18vw", minWidth: "18vw" }}>
+            <AnimatePresence mode="popLayout">
+              <motion.span
+                key={index}
+                initial={{ filter: "blur(20px)", opacity: 0, scale: 2 }}
+                animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
+                exit={{ filter: "blur(20px)", opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.4 }}
+                className="text-black absolute right-0"
+              >
+                {words[index]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+          {/* LEARN never moves — always anchored */}
+          <span className="text-black">LEARN</span>
         </div>
-        {/* LEARN never moves — always anchored */}
-        <span className="text-black">LEARN</span>
+
+        {/* About — inline below the animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-4xl"
+        >
+          <p className="text-[12px] font-bold text-black/40 mb-4 leading-loose">
+            Abhishek &middot;{' '}
+            <span className="relative inline-block whitespace-nowrap px-1">
+              <span
+                className="absolute inset-0 bg-[#FDE047] transform -skew-x-6 -rotate-1 scale-x-105 scale-y-110 opacity-90"
+                style={{ borderRadius: '2px 8px 3px 6px' }}
+              ></span>
+              <span className="relative text-black">Photographer turned into a Designer</span>
+            </span>
+          </p>
+          <p className="text-base md:text-xl text-black/60 leading-relaxed font-medium">{bio}</p>
+        </motion.div>
+
+        {/* Tags */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-wrap justify-start gap-3"
+        >
+          {["2+ Years", "Product Design", "India"].map(t => (
+            <span key={t} className="border border-black/30 px-4 py-2 text-[12px] font-bold tracking-widest">
+              {t}
+            </span>
+          ))}
+        </motion.div>
       </div>
-
-      {/* About — inline below the animation */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="max-w-4xl"
-      >
-        <p className="text-[12px] font-bold text-black/40 mb-4 leading-loose">
-          Abhishek &middot;{' '}
-          <span className="relative inline-block whitespace-nowrap px-1">
-            <span
-              className="absolute inset-0 bg-[#FDE047] transform -skew-x-6 -rotate-1 scale-x-105 scale-y-110 opacity-90"
-              style={{ borderRadius: '2px 8px 3px 6px' }}
-            ></span>
-            <span className="relative text-black">Photographer turned into a Designer</span>
-          </span>{' '}
-          &middot;
-        </p>
-        <p className="text-base text-black/60 leading-relaxed">{bio}</p>
-      </motion.div>
-
-      {/* Tags */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-wrap justify-center gap-3"
-      >
-        {["2+ Years", "Product Design", "India"].map(t => (
-          <span key={t} className="border border-black/30 px-4 py-2 text-[12px] font-bold tracking-widest">
-            {t}
-          </span>
-        ))}
-      </motion.div>
     </div>
   );
 }
@@ -176,7 +177,6 @@ function CaseStudies() {
           className="mb-12 md:mb-20"
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Recent Works</h2>
-          <div className="w-12 h-1 bg-white opacity-60"></div>
         </motion.div>
 
         <motion.div
@@ -250,7 +250,7 @@ function Experience() {
 
   return (
     <section className="bg-[#0a0a0a] text-white font-dm py-20 md:py-32 px-6 md:px-24">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -258,7 +258,7 @@ function Experience() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-20"
         >
-          <h2 className="text-[12px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 text-white/60">Experience</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Experience</h2>
           <p className="text-lg md:text-2xl text-white/80">somehow convinced real people to trust me with their products</p>
         </motion.div>
 
@@ -320,7 +320,7 @@ function ToolsStack() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-4xl mx-auto px-6 md:px-16 mb-8 md:mb-12"
       >
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">My Tools Stack</h2>
         <p className="text-[12px] md:text-sm text-white/70">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
       </motion.div>
 
@@ -518,7 +518,7 @@ function Gallery() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-7xl mx-auto px-6 md:px-12 mb-12"
       >
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Photography</h2>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Photography</h2>
         <p className="text-black/60 max-w-lg text-sm leading-relaxed">
           Moments captured on film. A brief look through the lens.
         </p>
