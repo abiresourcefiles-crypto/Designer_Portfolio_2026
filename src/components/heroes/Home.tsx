@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail } from 'lucide-react';
+import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail, ArrowUpRight } from 'lucide-react';
 
 const bio = (
   <>
@@ -83,7 +83,12 @@ function HeroSection() {
       </div>
 
       {/* About — inline below the animation */}
-      <div className="max-w-4xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-4xl"
+      >
         <p className="text-[12px] font-bold text-black/40 mb-4 leading-loose">
           Abhishek &middot;{' '}
           <span className="relative inline-block whitespace-nowrap px-1">
@@ -96,16 +101,21 @@ function HeroSection() {
           &middot;
         </p>
         <p className="text-base text-black/60 leading-relaxed">{bio}</p>
-      </div>
+      </motion.div>
 
       {/* Tags */}
-      <div className="flex flex-wrap justify-center gap-3">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-wrap justify-center gap-3"
+      >
         {["2+ Years", "Product Design", "India"].map(t => (
           <span key={t} className="border border-black/30 px-4 py-2 text-[12px] font-bold tracking-widest">
             {t}
           </span>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -127,7 +137,7 @@ function CaseStudies() {
       spec: "Latency Logic",
       desc: "Optimized data flow visualization interface with real-time feedback loops.",
       image: "./Voice Case Study.jpg",
-      link: "https://www.behance.net/gallery/247223671/Vision-20-Assistive-Tool-for-CVD-Medicos"
+      link: "https://www.behance.net/gallery/246190513/A-Redesign-wont-Solve-the-Pain-Point"
     },
     /*
     {
@@ -150,36 +160,65 @@ function CaseStudies() {
   ];
 
   return (
-    <section className="bg-black text-white font-dm py-20 md:py-32 px-6 md:px-24">
+    <section
+      className="bg-black text-white font-dm py-20 md:py-32 px-6 md:px-24"
+      style={{
+        backgroundImage: 'radial-gradient(#222 1px, transparent 1px)',
+        backgroundSize: '24px 24px'
+      }}
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="mb-12 md:mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12 md:mb-20"
+        >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Recent Works</h2>
           <div className="w-12 h-1 bg-white opacity-60"></div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16"
+        >
           {projects.map((p, i) => (
-            <div key={i} className="flex flex-col h-full justify-between rounded-sm p-2 -m-2 transition-all">
+            <motion.div
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+              }}
+              className="flex flex-col h-full justify-between rounded-sm p-2 -m-2 transition-all group"
+            >
               <div>
-                <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm">
+                <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm relative">
                   <img
                     src={p.image}
                     alt={p.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2">{p.title}</h3>
                 <p className="text-white/70 text-sm leading-relaxed mb-6 md:mb-8">{p.desc}</p>
               </div>
               <div>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[14px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none transition-all cursor-pointer">
+                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[14px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none transition-all duration-300 ease-[0.22,1,0.36,1] hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                   View Case study
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -212,14 +251,36 @@ function Experience() {
   return (
     <section className="bg-[#0a0a0a] text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-12 md:mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12 md:mb-20"
+        >
           <h2 className="text-[12px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 text-white/60">Experience</h2>
           <p className="text-lg md:text-2xl text-white/80">somehow convinced real people to trust me with their products</p>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-12 md:gap-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+          className="flex flex-col gap-12 md:gap-16"
+        >
           {experiences.map((exp, i) => (
-            <div key={i} className="flex flex-col md:flex-row md:items-start gap-2 md:gap-16 focus-within:ring-2 focus-within:ring-white/20 p-2 -m-2 rounded-sm transition-all">
+            <motion.div
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+              }}
+              className="flex flex-col md:flex-row md:items-start gap-2 md:gap-16 focus-within:ring-2 focus-within:ring-white/20 p-2 -m-2 rounded-sm transition-all"
+            >
               <div className="md:w-1/4 text-[12px] font-mono tracking-[0.2em] text-white/60 md:pt-1">
                 {exp.date}
               </div>
@@ -227,9 +288,9 @@ function Experience() {
                 <h3 className="text-lg md:text-xl font-bold mb-2 tracking-tight">{exp.role}</h3>
                 <p className="text-white/70 text-[13px] md:text-sm leading-relaxed">{exp.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -252,10 +313,16 @@ function ToolsStack() {
 
   return (
     <section className="bg-[#0f0f0f] text-white font-dm py-12 md:py-16 overflow-hidden border-t border-white/10 m-2 md:m-8 rounded-2xl md:rounded-3xl">
-      <div className="max-w-4xl mx-auto px-6 md:px-16 mb-8 md:mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-4xl mx-auto px-6 md:px-16 mb-8 md:mb-12"
+      >
         <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
         <p className="text-[12px] md:text-sm text-white/70">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
-      </div>
+      </motion.div>
 
       <div className="relative w-full overflow-hidden flex">
         {/* Left/Right Fade Masks */}
@@ -272,7 +339,7 @@ function ToolsStack() {
               key={i}
               title={tool.name}
               tabIndex={0}
-              className={`w-14 h-14 md:w-[80px] md:h-[80px] flex-shrink-0 flex items-center justify-center rounded-xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter overflow-hidden ${tool.text} ${tool.border} transition-transform hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer`}
+              className={`w-14 h-14 md:w-[80px] md:h-[80px] flex-shrink-0 flex items-center justify-center rounded-xl md:rounded-[1.2rem] shadow-lg font-bold text-lg md:text-xl tracking-tighter overflow-hidden ${tool.text} ${tool.border} transition-transform duration-300 ease-[0.22,1,0.36,1] hover:scale-105 focus:scale-105 focus:outline-none cursor-pointer`}
             >
               <img src={tool.image} alt={`${tool.name} Logo`} className="w-full h-full object-cover" />
             </div>
@@ -295,6 +362,14 @@ const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
 function Footer() {
   const [copied, setCopied] = useState(false);
   const email = "abhishekdesignspace@gmail.com";
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeString = time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' });
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -303,71 +378,75 @@ function Footer() {
   };
 
   const socials = [
-    { icon: Linkedin, href: "https://www.linkedin.com/in/abhishek-r-m/" },
-    { icon: Twitter, href: "https://x.com/Abi_photography" },
-    { icon: Figma, href: "#" },
-    { icon: Dribbble, href: "#" },
-    { icon: BehanceIcon, href: "https://www.behance.net/" }
+    { name: "Linkedin", href: "https://www.linkedin.com/in/abhishek-r-m/" },
+    { name: "X", href: "https://x.com/Abi_photography" },
+    { name: "Instagram", href: "#" },
+    { name: "Behance", href: "https://www.behance.net/abhishekrm" },
+    { name: "Dribbble", href: "#" },
+    { name: "Github", href: "#" }
   ];
 
   return (
-    <footer className="bg-black text-white font-dm py-24 md:py-48 px-6 md:px-8 overflow-hidden text-center">
-      <div className="max-w-4xl mx-auto">
+    <footer className="bg-black text-white font-dm py-24 md:py-32 px-6 md:px-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="text-center w-full"
         >
-          <div className="text-[12px] md:text-[12px] font-bold tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
-          <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
+          <h2 className="text-3xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             From visuals to products. <br /> Let’s create what’s next.
           </h2>
-
-          <div className="relative inline-block group">
-            {/* Tooltip */}
-            <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-[#1a1a1a] text-white text-[10px] font-bold tracking-widest rounded-sm transition-all duration-200 pointer-events-none flex items-center gap-1.5 whitespace-nowrap z-20 ${copied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-              {copied ? (
-                <>
-                  Copied <Check className="w-3.5 h-3.5 text-[#4ade80]" />
-                </>
-              ) : (
-                "Click to copy"
-              )}
-              {/* Tooltip Arrow */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-[#1a1a1a]"></div>
-            </div>
-
-            <button
-              onClick={copyEmail}
-              className="relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold text-[14px] hover:bg-white/90 transition-all focus:outline-none rounded-sm"
-            >
-              <span className="relative z-10">abhishekdesignspace@gmail.com</span>
-              <Copy className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
-            </button>
-          </div>
         </motion.div>
 
-        <div className="mt-24 md:mt-32 flex flex-col items-center gap-12 md:gap-16">
-          <div className="flex gap-8 md:gap-12">
-            {socials.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-60 hover:opacity-100 transition-all transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white p-2 rounded-sm"
-                aria-label={`Visit Social Link ${i + 1}`}
-              >
-                <social.icon className="w-5 h-5 md:w-6 md:h-6" />
-              </a>
-            ))}
-          </div>
+        {/* 3 Column Layout */}
+        <div className="w-full mt-24 md:mt-32 pt-12 md:pt-16 border-t border-white/20 grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-left">
 
-          <div className="text-[12px] font-bold opacity-40">
-            © 2026  <br></br>
-            <br></br>
-            <br></br>
-            Learn - Unlearn - Relearn          </div>
+          {/* Column 1: Socials */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h3 className="font-bold mb-6 text-[14px] md:text-base">Wanna Stalk me?</h3>
+            <ul className="flex flex-col gap-4">
+              {socials.map((s, i) => (
+                <li key={i}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[14px] text-white/70 hover:text-white transition-colors w-fit">
+                    {s.name} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300 ease-[0.22,1,0.36,1]" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Column 2: Local Time */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h3 className="font-bold mb-6 text-[14px] md:text-base">Local Time</h3>
+            <p className="text-[14px] text-white/70 font-mono">{timeString} GMT +5:30</p>
+          </motion.div>
+
+          {/* Column 3: Contacts */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h3 className="font-bold mb-6 text-[14px] md:text-base">Contacts</h3>
+            <a href={`mailto:${email}`} className="group relative inline-block pb-1 text-[14px] text-white/70 hover:text-white transition-colors duration-300">
+              <span className="relative z-10">{email}</span>
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white origin-left scale-x-0 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-x-100" />
+            </a>
+          </motion.div>
+
         </div>
       </div>
     </footer>
@@ -432,12 +511,18 @@ function Gallery() {
 
   return (
     <section className="bg-[#f0f0f0] text-black font-dm py-16 md:py-24 border-t border-black/10 overflow-hidden relative w-full">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-7xl mx-auto px-6 md:px-12 mb-12"
+      >
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Photography</h2>
         <p className="text-black/60 max-w-lg text-sm leading-relaxed">
           Moments captured on film. A brief look through the lens.
         </p>
-      </div>
+      </motion.div>
 
       <div className="w-full flex flex-col gap-16 md:gap-24 overflow-hidden relative pt-10 pb-16">
 
