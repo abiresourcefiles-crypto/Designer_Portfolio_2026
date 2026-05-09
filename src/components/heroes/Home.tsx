@@ -84,14 +84,14 @@ function HeroSection() {
 
       {/* About — inline below the animation */}
       <div className="max-w-4xl">
-        <p className="text-[11px] font-bold text-black/40 mb-4 leading-loose">
+        <p className="text-[12px] font-bold text-black/40 mb-4 leading-loose">
           Abhishek &middot;{' '}
           <span className="relative inline-block whitespace-nowrap px-1">
-            <span 
-              className="absolute inset-0 bg-[#FDE047] transform -skew-x-6 -rotate-1 scale-x-105 scale-y-110 opacity-90" 
+            <span
+              className="absolute inset-0 bg-[#FDE047] transform -skew-x-6 -rotate-1 scale-x-105 scale-y-110 opacity-90"
               style={{ borderRadius: '2px 8px 3px 6px' }}
             ></span>
-            <span className="relative text-black">Photographer turn into a Designer</span>
+            <span className="relative text-black">Photographer turned into a Designer</span>
           </span>{' '}
           &middot;
         </p>
@@ -101,7 +101,7 @@ function HeroSection() {
       {/* Tags */}
       <div className="flex flex-wrap justify-center gap-3">
         {["2+ Years", "Product Design", "India"].map(t => (
-          <span key={t} className="border border-black/30 px-4 py-2 text-[11px] font-bold tracking-widest">
+          <span key={t} className="border border-black/30 px-4 py-2 text-[12px] font-bold tracking-widest">
             {t}
           </span>
         ))}
@@ -173,8 +173,8 @@ function CaseStudies() {
                 <p className="text-white/70 text-sm leading-relaxed mb-6 md:mb-8">{p.desc}</p>
               </div>
               <div>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white transition-all cursor-pointer">
-                  View Case Study
+                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[14px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none transition-all cursor-pointer">
+                  View Case study
                 </a>
               </div>
             </div>
@@ -213,14 +213,14 @@ function Experience() {
     <section className="bg-[#0a0a0a] text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12 md:mb-20">
-          <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 text-white/60">Experience</h2>
+          <h2 className="text-[12px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 text-white/60">Experience</h2>
           <p className="text-lg md:text-2xl text-white/80">somehow convinced real people to trust me with their products</p>
         </div>
 
         <div className="flex flex-col gap-12 md:gap-16">
           {experiences.map((exp, i) => (
             <div key={i} className="flex flex-col md:flex-row md:items-start gap-2 md:gap-16 focus-within:ring-2 focus-within:ring-white/20 p-2 -m-2 rounded-sm transition-all">
-              <div className="md:w-1/4 text-[11px] font-mono tracking-[0.2em] text-white/60 md:pt-1">
+              <div className="md:w-1/4 text-[12px] font-mono tracking-[0.2em] text-white/60 md:pt-1">
                 {exp.date}
               </div>
               <div className="md:w-3/4">
@@ -254,7 +254,7 @@ function ToolsStack() {
     <section className="bg-[#0f0f0f] text-white font-dm py-12 md:py-16 overflow-hidden border-t border-white/10 m-2 md:m-8 rounded-2xl md:rounded-3xl">
       <div className="max-w-4xl mx-auto px-6 md:px-16 mb-8 md:mb-12">
         <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-2">My Tools Stack</h2>
-        <p className="text-[11px] md:text-sm text-white/70">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
+        <p className="text-[12px] md:text-sm text-white/70">A Comprehensive Collection of Useful Tools to Support and Optimize My Workflow.</p>
       </div>
 
       <div className="relative w-full overflow-hidden flex">
@@ -318,7 +318,7 @@ function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="text-[11px] md:text-[12px] font-bold tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
+          <div className="text-[12px] md:text-[12px] font-bold tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
           <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
             From visuals to products. <br /> Let’s create what’s next.
           </h2>
@@ -339,7 +339,7 @@ function Footer() {
 
             <button
               onClick={copyEmail}
-              className="relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold text-[11px] hover:bg-white/90 transition-all focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
+              className="relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold text-[14px] hover:bg-white/90 transition-all focus:outline-none rounded-sm"
             >
               <span className="relative z-10">abhishekdesignspace@gmail.com</span>
               <Copy className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
@@ -363,7 +363,7 @@ function Footer() {
             ))}
           </div>
 
-          <div className="text-[11px] font-bold opacity-40">
+          <div className="text-[12px] font-bold opacity-40">
             © 2026  <br></br>
             <br></br>
             <br></br>
