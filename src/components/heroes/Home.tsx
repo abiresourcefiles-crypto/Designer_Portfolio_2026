@@ -173,72 +173,6 @@ function CaseStudies() {
   );
 }
 
-function Footer() {
-  const [copied, setCopied] = useState(false);
-  const email = "abhishekdesignspace@gmail.com";
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const socials = [
-    { icon: Linkedin, href: "https://www.linkedin.com/in/abhishek-r-m/" },
-    { icon: Twitter, href: "#" },
-    { icon: Figma, href: "#" },
-    { icon: Dribbble, href: "#" }
-  ];
-
-  return (
-    <footer className="bg-black text-white font-dm py-24 md:py-48 px-6 md:px-8 overflow-hidden text-center">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
-          <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
-            From visuals to products. <br /> Let’s create what’s next.
-          </h2>
-
-          <button
-            onClick={copyEmail}
-            className="group relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
-          >
-            <span className="relative z-10">{copied ? "Copied" : "abhishekdesignspace@gmail.com"}</span>
-            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />}
-          </button>
-        </motion.div>
-
-        <div className="mt-24 md:mt-32 flex flex-col items-center gap-12 md:gap-16">
-          <div className="flex gap-8 md:gap-12">
-            {socials.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-60 hover:opacity-100 transition-all transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white p-2 rounded-sm"
-                aria-label={`Visit Social Link ${i + 1}`}
-              >
-                <social.icon className="w-5 h-5 md:w-6 md:h-6" />
-              </a>
-            ))}
-          </div>
-
-          <div className="text-[11px] font-bold uppercase tracking-[0.5em] opacity-40">
-            © 2026  <br></br>
-            <br></br>
-            <br></br>
-            Learn - Unlearn - Relearn          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 function Experience() {
   const experiences = [
     {
@@ -284,43 +218,6 @@ function Experience() {
             </div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function Gallery() {
-  const photos = [
-    { src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop", rot: "-rotate-6" },
-    { src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop", rot: "rotate-3" },
-    { src: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=800&auto=format&fit=crop", rot: "-rotate-12" },
-    { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop", rot: "rotate-6" },
-    { src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", rot: "-rotate-3" }
-  ];
-
-  return (
-    <section className="bg-[#050505] text-white font-dm pt-20 pb-12 md:pt-32 md:pb-16 overflow-hidden relative border-t border-white/10">
-      <div className="max-w-4xl mx-auto px-6 md:px-24 mb-12 md:mb-24">
-        <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 uppercase text-white/60">Life & Culture</h2>
-        <p className="text-lg md:text-2xl text-white/80">Behind the scenes.</p>
-      </div>
-
-      <div className="flex flex-wrap justify-center items-center gap-4 px-4 h-auto md:h-72 mt-8 md:mt-12 group">
-        {photos.map((photo, i) => (
-          <div
-            key={i}
-            tabIndex={0}
-            className={`relative w-24 h-32 md:h-auto md:w-56 aspect-[4/5] md:-mx-8 border-[4px] md:border-8 border-white bg-white shadow-2xl rounded-sm transition-all duration-500 hover:z-50 hover:-translate-y-4 md:hover:-translate-y-12 hover:scale-110 hover:rotate-0 focus:z-50 focus:scale-110 focus:rotate-0 focus:outline-none cursor-pointer ${photo.rot}`}
-          >
-            <div className="w-full h-full overflow-hidden">
-              <img
-                src={photo.src}
-                alt={`Culture and Life gallery moment ${i + 1}`}
-                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
-              />
-            </div>
-          </div>
-        ))}
       </div>
     </section>
   );
@@ -374,7 +271,189 @@ function ToolsStack() {
   );
 }
 
+function Footer() {
+  const [copied, setCopied] = useState(false);
+  const email = "abhishekdesignspace@gmail.com";
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const socials = [
+    { icon: Linkedin, href: "https://www.linkedin.com/in/abhishek-r-m/" },
+    { icon: Twitter, href: "https://x.com/Abi_photography" },
+    { icon: Figma, href: "#" },
+    { icon: Dribbble, href: "#" }
+  ];
+
+  return (
+    <footer className="bg-black text-white font-dm py-24 md:py-48 px-6 md:px-8 overflow-hidden text-center">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
+          <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
+            From visuals to products. <br /> Let’s create what’s next.
+          </h2>
+
+          <button
+            onClick={copyEmail}
+            className="group relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
+          >
+            <span className="relative z-10">{copied ? "Copied" : "abhishekdesignspace@gmail.com"}</span>
+            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />}
+          </button>
+        </motion.div>
+
+        <div className="mt-24 md:mt-32 flex flex-col items-center gap-12 md:gap-16">
+          <div className="flex gap-8 md:gap-12">
+            {socials.map((social, i) => (
+              <a
+                key={i}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-60 hover:opacity-100 transition-all transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white p-2 rounded-sm"
+                aria-label={`Visit Social Link ${i + 1}`}
+              >
+                <social.icon className="w-5 h-5 md:w-6 md:h-6" />
+              </a>
+            ))}
+          </div>
+
+          <div className="text-[11px] font-bold uppercase tracking-[0.5em] opacity-40">
+            © 2026  <br></br>
+            <br></br>
+            <br></br>
+            Learn - Unlearn - Relearn          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// Separate arrays for easy adding/removing of images
+export const horizontalImages = [
+  "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1481481600465-42004245b0d0?w=800&auto=format&fit=crop&q=60"
+];
+
+export const verticalImages = [
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1503602642458-232111445657?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=60"
+];
+
+// Mix and match them for the two strips
+const strip1Photos = [
+  { src: horizontalImages[0], type: 'horizontal' },
+  { src: verticalImages[0], type: 'vertical' },
+  { src: horizontalImages[1], type: 'horizontal' },
+  { src: horizontalImages[2], type: 'horizontal' },
+  { src: verticalImages[1], type: 'vertical' },
+  { src: horizontalImages[3], type: 'horizontal' },
+  { src: verticalImages[5], type: 'vertical' },
+  { src: horizontalImages[4], type: 'horizontal' },
+  { src: verticalImages[2], type: 'vertical' },
+  { src: horizontalImages[5], type: 'horizontal' },
+  { src: horizontalImages[6], type: 'horizontal' },
+  { src: verticalImages[3], type: 'vertical' },
+];
+
+const strip2Photos = [
+  { src: verticalImages[2], type: 'vertical' },
+  { src: horizontalImages[4], type: 'horizontal' },
+  { src: horizontalImages[5], type: 'horizontal' },
+  { src: verticalImages[3], type: 'vertical' },
+  { src: horizontalImages[6], type: 'horizontal' },
+  { src: verticalImages[4], type: 'vertical' },
+  { src: horizontalImages[0], type: 'horizontal' },
+  { src: verticalImages[5], type: 'vertical' },
+  { src: horizontalImages[1], type: 'horizontal' },
+  { src: horizontalImages[2], type: 'horizontal' },
+  { src: verticalImages[0], type: 'vertical' },
+  { src: horizontalImages[3], type: 'horizontal' },
+];
+
+function Gallery() {
+  // Quadruple the arrays to ensure a seamless infinite scrolling loop
+  const roll1 = [...strip1Photos, ...strip1Photos, ...strip1Photos, ...strip1Photos];
+  const roll2 = [...strip2Photos, ...strip2Photos, ...strip2Photos, ...strip2Photos];
+
+  return (
+    <section className="bg-[#f0f0f0] text-black font-dm py-16 md:py-24 border-t border-black/10 overflow-hidden relative w-full">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 uppercase">Photography</h2>
+        <p className="text-black/60 max-w-lg text-sm leading-relaxed">
+          Moments captured on film. A brief look through the lens.
+        </p>
+      </div>
+
+      <div className="w-full flex flex-col gap-16 md:gap-24 overflow-hidden relative pt-10 pb-16">
+
+        {/* Strip 1: Right to Left */}
+        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative rotate-2">
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ ease: "linear", duration: 45, repeat: Infinity }}
+            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max py-8 md:py-12 relative bg-[#161616]"
+          >
+            {/* Top Sprocket Holes */}
+            <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
+            {/* Bottom Sprocket Holes */}
+            <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
+
+            {roll1.map((p, i) => (
+              <div key={i} className={`relative h-full flex-shrink-0 ${p.type === 'horizontal' ? 'aspect-[3/2]' : 'aspect-[2/3]'}`}>
+                <img src={p.src} className="w-full h-full object-cover filter contrast-125 transition-all duration-500" />
+                <div className="absolute -bottom-6 md:-bottom-8 left-0 text-[#f0f0f0] text-[8px] md:text-[10px] font-mono tracking-widest opacity-50 whitespace-nowrap">
+                  KODAK PORTRA 400 • {i + 1}A
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Strip 2: Left to Right */}
+        <div className="w-[110%] -ml-[5%] overflow-hidden shadow-2xl relative -rotate-2">
+          <motion.div
+            animate={{ x: ["-50%", "0%"] }}
+            transition={{ ease: "linear", duration: 40, repeat: Infinity }}
+            className="flex h-48 md:h-72 gap-4 md:gap-8 px-4 w-max py-8 md:py-12 relative bg-[#161616]"
+          >
+            {/* Top Sprocket Holes */}
+            <div className="absolute top-2 md:top-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
+            {/* Bottom Sprocket Holes */}
+            <div className="absolute bottom-2 md:bottom-3 left-0 right-0 h-2 md:h-3 bg-[repeating-linear-gradient(90deg,#f0f0f0_0px,#f0f0f0_10px,transparent_10px,transparent_20px)] opacity-80" />
+
+            {roll2.map((p, i) => (
+              <div key={i} className={`relative h-full flex-shrink-0 ${p.type === 'horizontal' ? 'aspect-[3/2]' : 'aspect-[2/3]'}`}>
+                <img src={p.src} className="w-full h-full object-cover filter contrast-125 transition-all duration-500" />
+                <div className="absolute -bottom-6 md:-bottom-8 right-0 text-[#f0f0f0] text-[8px] md:text-[10px] font-mono tracking-widest opacity-50 whitespace-nowrap">
+                  ILFORD HP5 • {i + 12}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
 
 export default function VariationWithCaseStudies() {
   return (
