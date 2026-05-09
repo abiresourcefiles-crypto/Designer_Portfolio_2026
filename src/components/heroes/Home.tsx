@@ -2,8 +2,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
 import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail } from 'lucide-react';
 
-const bio = "I enjoy simplifying complex systems into experiences that feel clear and natural. My work spans scalable design systems, refined user flows, and research-driven prototypes always with a focus on clarity, accessibility, and real usability.";
-
+const bio = (
+  <>
+    Expectation teaches fast, reality teaches harder, and most of life becomes <br className="hidden md:block" />
+    learning, unlearning, and relearning things you once thought were absolute truth.
+  </>
+);
 function HeroSection() {
   const [index, setIndex] = useState(0);
   const words = ["Un", "Re", ""];
@@ -79,9 +83,17 @@ function HeroSection() {
       </div>
 
       {/* About — inline below the animation */}
-      <div className="max-w-xl">
-        <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-black/40 mb-4">
-          Abhishek &middot; Product Designer &middot; India
+      <div className="max-w-4xl">
+        <p className="text-[11px] font-bold text-black/40 mb-4 leading-loose">
+          Abhishek &middot;{' '}
+          <span className="relative inline-block whitespace-nowrap px-1">
+            <span 
+              className="absolute inset-0 bg-[#FDE047] transform -skew-x-6 -rotate-1 scale-x-105 scale-y-110 opacity-90" 
+              style={{ borderRadius: '2px 8px 3px 6px' }}
+            ></span>
+            <span className="relative text-black">Photographer turn into a Designer</span>
+          </span>{' '}
+          &middot;
         </p>
         <p className="text-base text-black/60 leading-relaxed">{bio}</p>
       </div>
@@ -89,7 +101,7 @@ function HeroSection() {
       {/* Tags */}
       <div className="flex flex-wrap justify-center gap-3">
         {["2+ Years", "Product Design", "India"].map(t => (
-          <span key={t} className="border border-black/30 px-4 py-2 text-[11px] font-bold uppercase tracking-widest">
+          <span key={t} className="border border-black/30 px-4 py-2 text-[11px] font-bold tracking-widest">
             {t}
           </span>
         ))}
@@ -141,7 +153,7 @@ function CaseStudies() {
     <section className="bg-black text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 uppercase">Recent Works</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Recent Works</h2>
           <div className="w-12 h-1 bg-white opacity-60"></div>
         </div>
 
@@ -157,11 +169,11 @@ function CaseStudies() {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight mb-2">{p.title}</h3>
+                <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2">{p.title}</h3>
                 <p className="text-white/70 text-sm leading-relaxed mb-6 md:mb-8">{p.desc}</p>
               </div>
               <div>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold uppercase tracking-widest hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white transition-all cursor-pointer">
+                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[11px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white transition-all cursor-pointer">
                   View Case Study
                 </a>
               </div>
@@ -201,14 +213,14 @@ function Experience() {
     <section className="bg-[#0a0a0a] text-white font-dm py-20 md:py-32 px-6 md:px-24">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12 md:mb-20">
-          <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 uppercase text-white/60">Experience</h2>
+          <h2 className="text-[11px] md:text-sm font-bold tracking-widest mb-4 md:mb-6 text-white/60">Experience</h2>
           <p className="text-lg md:text-2xl text-white/80">somehow convinced real people to trust me with their products</p>
         </div>
 
         <div className="flex flex-col gap-12 md:gap-16">
           {experiences.map((exp, i) => (
             <div key={i} className="flex flex-col md:flex-row md:items-start gap-2 md:gap-16 focus-within:ring-2 focus-within:ring-white/20 p-2 -m-2 rounded-sm transition-all">
-              <div className="md:w-1/4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/60 md:pt-1">
+              <div className="md:w-1/4 text-[11px] font-mono tracking-[0.2em] text-white/60 md:pt-1">
                 {exp.date}
               </div>
               <div className="md:w-3/4">
@@ -270,7 +282,16 @@ function ToolsStack() {
     </section >
   );
 }
-
+const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M12.363 14.947c0-1.848-.879-3.214-2.695-3.726 1.325-.631 2.016-1.587 2.016-3.074 0-2.932-2.192-3.647-4.721-3.647H0v14.721h7.158c2.684 0 5.205-1.283 5.205-4.274zM3.246 7.013h3.046c1.171 0 2.225.328 2.225 1.682 0 1.25-.82 1.753-1.98 1.753H3.246zm-.001 9.708v-4.054h3.538c1.429 0 2.333.594 2.333 2.102 0 1.487-1.079 1.952-2.4 1.952zM18.796 19.5c2.554 0 4.208-1.147 5.004-3.585h-2.592c-.279.91-1.429 1.391-2.321 1.391-1.721 0-2.625-1.005-2.625-2.713h7.713c.244-3.418-1.66-6.331-5.18-6.331-3.259 0-5.471 2.442-5.471 5.641 0 3.32 2.096 5.597 5.472 5.597zm-.092-9.026c1.475 0 2.217.864 2.341 2.277h-4.779c.097-1.401 1.03-2.277 2.438-2.277zM15.667 5.273h5.988v1.45h-5.988z" />
+  </svg>
+);
 function Footer() {
   const [copied, setCopied] = useState(false);
   const email = "abhishekdesignspace@gmail.com";
@@ -285,7 +306,8 @@ function Footer() {
     { icon: Linkedin, href: "https://www.linkedin.com/in/abhishek-r-m/" },
     { icon: Twitter, href: "https://x.com/Abi_photography" },
     { icon: Figma, href: "#" },
-    { icon: Dribbble, href: "#" }
+    { icon: Dribbble, href: "#" },
+    { icon: BehanceIcon, href: "https://www.behance.net/" }
   ];
 
   return (
@@ -296,18 +318,33 @@ function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
+          <div className="text-[11px] md:text-[12px] font-bold tracking-[0.4em] opacity-60 mb-8 italic">The final chapter.</div>
           <h2 className="text-3xl md:text-7xl font-bold tracking-tight mb-12 md:mb-16 leading-[1.1]">
             From visuals to products. <br /> Let’s create what’s next.
           </h2>
 
-          <button
-            onClick={copyEmail}
-            className="group relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-white/90 transition-all overflow-hidden focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
-          >
-            <span className="relative z-10">{copied ? "Copied" : "abhishekdesignspace@gmail.com"}</span>
-            {copied ? <Check className="w-4 h-4 relative z-10" /> : <Mail className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />}
-          </button>
+          <div className="relative inline-block group">
+            {/* Tooltip */}
+            <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-[#1a1a1a] text-white text-[10px] font-bold tracking-widest rounded-sm transition-all duration-200 pointer-events-none flex items-center gap-1.5 whitespace-nowrap z-20 ${copied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+              {copied ? (
+                <>
+                  Copied <Check className="w-3.5 h-3.5 text-[#4ade80]" />
+                </>
+              ) : (
+                "Click to copy"
+              )}
+              {/* Tooltip Arrow */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-[#1a1a1a]"></div>
+            </div>
+
+            <button
+              onClick={copyEmail}
+              className="relative inline-flex items-center gap-2 md:gap-4 px-6 md:px-12 py-4 md:py-6 bg-white text-black font-bold text-[11px] hover:bg-white/90 transition-all focus:outline-none focus:ring-4 focus:ring-white/50 rounded-sm"
+            >
+              <span className="relative z-10">abhishekdesignspace@gmail.com</span>
+              <Copy className="w-4 h-4 relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
+            </button>
+          </div>
         </motion.div>
 
         <div className="mt-24 md:mt-32 flex flex-col items-center gap-12 md:gap-16">
@@ -326,7 +363,7 @@ function Footer() {
             ))}
           </div>
 
-          <div className="text-[11px] font-bold uppercase tracking-[0.5em] opacity-40">
+          <div className="text-[11px] font-bold opacity-40">
             © 2026  <br></br>
             <br></br>
             <br></br>
@@ -396,7 +433,7 @@ function Gallery() {
   return (
     <section className="bg-[#f0f0f0] text-black font-dm py-16 md:py-24 border-t border-black/10 overflow-hidden relative w-full">
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 uppercase">Photography</h2>
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Photography</h2>
         <p className="text-black/60 max-w-lg text-sm leading-relaxed">
           Moments captured on film. A brief look through the lens.
         </p>
