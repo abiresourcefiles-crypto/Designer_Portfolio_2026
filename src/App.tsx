@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-white text-black font-dm selection:bg-black selection:text-white flex flex-col">
-      
+
       {/* Resume Loading Overlay */}
       <AnimatePresence>
         {isOpeningResume && (
@@ -94,7 +94,7 @@ export default function App() {
           className="flex gap-10 text-[14px] font-medium"
         >
           {[
-            { name: "about", action: () => setCurrentPage('about') },
+            // { name: "about", action: () => setCurrentPage('about') },
             { name: "writings", url: "https://medium.com/@abhishekdesignspace", blank: true },
             { name: "resume", action: handleResumeClick },
             { name: "contact", action: () => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
