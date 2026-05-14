@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Variation9 from "./components/heroes/Home";
+import BentoLayout from "./components/heroes/Bento";
 import About from "./components/About";
 import { Analytics } from "@vercel/analytics/react";
 import { motion, AnimatePresence } from "motion/react";
@@ -8,11 +9,12 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
     return sessionStorage.getItem('portfolioCurrentPage') || 'home';
   });
+  const [isBento, setIsBento] = useState(() => {
+    return sessionStorage.getItem('portfolioLayoutMode') === 'bento';
+  });
 
   useEffect(() => {
     sessionStorage.setItem('portfolioCurrentPage', currentPage);
-
-    // Handle scroll position on refresh
     if ('scrollRestoration' in history) {
       if (currentPage === 'home') {
         history.scrollRestoration = 'manual';
@@ -22,14 +24,27 @@ export default function App() {
       }
     }
   }, [currentPage]);
-  const [isOpeningResume, setIsOpeningResume] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.setItem('portfolioLayoutMode', isBento ? 'bento' : 'classic');
+    window.scrollTo(0, 0);
+  }, [isBento]);
+
+  const [loadingState, setLoadingState] = useState<{ active: boolean; text: string }>({
+    active: false,
+    text: ''
+  });
+
+  const handleExternalLink = (url: string, text: string = 'Opening Link') => {
+    setLoadingState({ active: true, text });
+    setTimeout(() => {
+      window.open(url, "_blank");
+      setTimeout(() => setLoadingState({ active: false, text: '' }), 100);
+    }, 600); // Increased duration slightly for better feel
+  };
 
   const handleResumeClick = () => {
-    setIsOpeningResume(true);
-    setTimeout(() => {
-      window.open("https://drive.google.com/file/d/1_REbzPqSZqnhBweCx8GncyX-PcG6Fd-q/view?usp=sharing", "_blank");
-      setTimeout(() => setIsOpeningResume(false), 100); // fade out shortly after opening
-    }, 350);
+    handleExternalLink("https://drive.google.com/file/d/1_REbzPqSZqnhBweCx8GncyX-PcG6Fd-q/view?usp=sharing", "Opening Resume");
   };
 
   return (
@@ -37,7 +52,7 @@ export default function App() {
 
       {/* Resume Loading Overlay */}
       <AnimatePresence>
-        {isOpeningResume && (
+        {loadingState.active && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,7 +67,7 @@ export default function App() {
               className="flex items-center gap-4"
             >
               <div className="w-2 h-2 rounded-full bg-black animate-ping"></div>
-              <span className="text-xl md:text-2xl font-bold tracking-widest uppercase">Opening Resume</span>
+              <span className="text-xl md:text-2xl font-bold tracking-widest uppercase">{loadingState.text}</span>
             </motion.div>
           </motion.div>
         )}
@@ -63,14 +78,15 @@ export default function App() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full h-20 px-10 flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white"
+        className="w-full h-20 px-6 md:px-10 flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white"
       >
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           onClick={() => setCurrentPage('home')}
-          className="w-[56px] h-[56px] flex items-center justify-center cursor-pointer"
+          className="w-[56px] h-[56px] flex items-center justify-center cursor-pointer flex-shrink-0"
         >
           <svg viewBox="0 0 424 288" fill="none" className="w-full h-full object-contain" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_2133_570)">
@@ -84,6 +100,40 @@ export default function App() {
           </svg>
         </motion.div>
 
+        {/* Center: Layout Toggle */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-1 bg-black/[0.05] rounded-full p-1 border border-black/10"
+          role="group"
+          aria-label="Layout toggle"
+        >
+          <button
+            id="toggle-classic"
+            onClick={() => setIsBento(false)}
+            className={`relative px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all duration-300 ${
+              !isBento
+                ? 'bg-black text-white shadow-sm'
+                : 'text-black/40 hover:text-black/70'
+            }`}
+          >
+            Classic
+          </button>
+          <button
+            id="toggle-bento"
+            onClick={() => setIsBento(true)}
+            className={`relative px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all duration-300 ${
+              isBento
+                ? 'bg-black text-white shadow-sm'
+                : 'text-black/40 hover:text-black/70'
+            }`}
+          >
+            Bento
+          </button>
+        </motion.div>
+
+        {/* Right: Nav Links */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -91,10 +141,9 @@ export default function App() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
           }}
-          className="flex gap-10 text-[14px] font-medium"
+          className="flex gap-6 md:gap-10 text-[14px] font-medium"
         >
           {[
-            // { name: "about", action: () => setCurrentPage('about') },
             { name: "writings", url: "https://medium.com/@abhishekdesignspace", blank: true },
             { name: "resume", action: handleResumeClick },
             { name: "contact", action: () => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
@@ -112,9 +161,12 @@ export default function App() {
                 if (item.action) {
                   e.preventDefault();
                   item.action();
+                } else if (item.blank && item.url) {
+                  e.preventDefault();
+                  handleExternalLink(item.url, `Opening ${item.name}`);
                 }
               }}
-              className="group relative pb-1 opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+              className="group relative pb-1 opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer hidden md:block"
             >
               <span className="relative z-10">{item.name}</span>
               <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black origin-left scale-x-0 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-x-100" />
@@ -124,9 +176,32 @@ export default function App() {
       </motion.nav>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative flex flex-col">
-        {currentPage === 'home' ? <Variation9 /> : <About />}
-      </main>
+      <AnimatePresence mode="wait">
+        {isBento ? (
+          <motion.main
+            key="bento"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 relative flex flex-col bg-[#0a0a0a]"
+          >
+            <BentoLayout onLinkClick={handleExternalLink} />
+          </motion.main>
+        ) : (
+          <motion.main
+            key="classic"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 relative flex flex-col"
+          >
+            {currentPage === 'home' ? <Variation9 onLinkClick={handleExternalLink} /> : <About />}
+          </motion.main>
+        )}
+      </AnimatePresence>
+
       <Analytics />
     </div>
   );

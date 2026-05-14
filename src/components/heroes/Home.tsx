@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { Linkedin, Twitter, Globe, Figma, Dribbble, Check, Copy, Mail, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 const bio = (
   <>
@@ -8,6 +8,8 @@ const bio = (
     learning, unlearning, and relearning things you once thought were absolute truth.
   </>
 );
+
+/* ==================== HERO SECTION ==================== */
 function HeroSection() {
   const [index, setIndex] = useState(0);
   const words = ["Un", "Re", ""];
@@ -121,8 +123,8 @@ function HeroSection() {
   );
 }
 
-
-function CaseStudies() {
+/* ==================== CASE STUDIES ==================== */
+function CaseStudies({ onLinkClick }: { onLinkClick: (url: string, text: string) => void }) {
   const projects = [
     {
       id: "A-501",
@@ -199,7 +201,10 @@ function CaseStudies() {
               className="flex flex-col h-full justify-between rounded-sm p-2 -m-2 transition-all group"
             >
               <div>
-                <div className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm relative">
+                <div
+                  className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm relative cursor-pointer"
+                  onClick={() => onLinkClick(p.link, `Opening ${p.title}`)}
+                >
                   <img
                     src={p.image}
                     alt={p.title}
@@ -212,9 +217,12 @@ function CaseStudies() {
                 <p className="text-white/70 text-sm leading-relaxed mb-6 md:mb-8">{p.desc}</p>
               </div>
               <div>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 border border-white/40 text-[14px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none transition-all duration-300 ease-[0.22,1,0.36,1] hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+                <button
+                  onClick={() => onLinkClick(p.link, `Opening ${p.title}`)}
+                  className="inline-block px-6 py-3 border border-white/40 text-[14px] font-bold tracking-widest hover:bg-white hover:text-black focus:outline-none transition-all duration-300 ease-[0.22,1,0.36,1] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                >
                   View Case study
-                </a>
+                </button>
               </div>
             </motion.div>
           ))}
@@ -223,7 +231,7 @@ function CaseStudies() {
     </section>
   );
 }
-
+/* ==================== EXPERIENCE ==================== */
 function Experience() {
   const experiences = [
     {
@@ -295,7 +303,7 @@ function Experience() {
     </section>
   );
 }
-
+/* ==================== TOOLS STACK ==================== */
 function ToolsStack() {
   const tools = [
     { name: "Notion", text: "text-white", image: "./NOTION.png", border: "border border-transparent" },
@@ -359,7 +367,9 @@ const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M12.363 14.947c0-1.848-.879-3.214-2.695-3.726 1.325-.631 2.016-1.587 2.016-3.074 0-2.932-2.192-3.647-4.721-3.647H0v14.721h7.158c2.684 0 5.205-1.283 5.205-4.274zM3.246 7.013h3.046c1.171 0 2.225.328 2.225 1.682 0 1.25-.82 1.753-1.98 1.753H3.246zm-.001 9.708v-4.054h3.538c1.429 0 2.333.594 2.333 2.102 0 1.487-1.079 1.952-2.4 1.952zM18.796 19.5c2.554 0 4.208-1.147 5.004-3.585h-2.592c-.279.91-1.429 1.391-2.321 1.391-1.721 0-2.625-1.005-2.625-2.713h7.713c.244-3.418-1.66-6.331-5.18-6.331-3.259 0-5.471 2.442-5.471 5.641 0 3.32 2.096 5.597 5.472 5.597zm-.092-9.026c1.475 0 2.217.864 2.341 2.277h-4.779c.097-1.401 1.03-2.277 2.438-2.277zM15.667 5.273h5.988v1.45h-5.988z" />
   </svg>
 );
-function Footer() {
+
+/* ==================== FOOTER ==================== */
+function Footer({ onLinkClick }: { onLinkClick: (url: string, text: string) => void }) {
   const [copied, setCopied] = useState(false);
   const email = "abhishekdesignspace@gmail.com";
   const [time, setTime] = useState(new Date());
@@ -370,12 +380,6 @@ function Footer() {
   }, []);
 
   const timeString = time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' });
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const socials = [
     { name: "Linkedin", href: "https://www.linkedin.com/in/abhishek-r-m/" },
@@ -414,7 +418,16 @@ function Footer() {
             <ul className="flex flex-col gap-4">
               {socials.map((s, i) => (
                 <li key={i}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[14px] text-white/70 hover:text-white transition-colors w-fit">
+                  <a
+                    href={s.href}
+                    onClick={(e) => {
+                      if (s.href !== '#') {
+                        e.preventDefault();
+                        onLinkClick(s.href, `Opening ${s.name}`);
+                      }
+                    }}
+                    className="group flex items-center gap-2 text-[14px] text-white/70 hover:text-white transition-colors w-fit"
+                  >
                     {s.name} <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300 ease-[0.22,1,0.36,1]" />
                   </a>
                 </li>
@@ -526,7 +539,7 @@ const strip2Photos = [
   { src: horizontalImages[1], type: 'horizontal' },
   { src: horizontalImages[0], type: 'horizontal' },
 ];
-
+/* ==================== GALLERY ==================== */
 function Gallery() {
   // Quadruple the arrays to ensure a seamless infinite scrolling loop
   const roll1 = [...strip1Photos, ...strip1Photos, ...strip1Photos, ...strip1Photos];
@@ -600,15 +613,15 @@ function Gallery() {
   );
 }
 
-export default function VariationWithCaseStudies() {
+export default function VariationWithCaseStudies({ onLinkClick }: { onLinkClick: (url: string, text: string) => void }) {
   return (
     <>
       <HeroSection />
-      <CaseStudies />
+      <CaseStudies onLinkClick={onLinkClick} />
       <Experience />
       <ToolsStack />
       <Gallery />
-      <Footer />
+      <Footer onLinkClick={onLinkClick} />
     </>
   );
 }
