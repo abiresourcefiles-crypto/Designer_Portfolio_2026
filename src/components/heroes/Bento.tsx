@@ -157,11 +157,36 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:col-span-12 bg-[#111] rounded-[16px] relative overflow-hidden h-[300px] border border-white/10 p-8 flex flex-col justify-center"
+            className="lg:col-span-12 bg-[#111] rounded-[16px] relative overflow-hidden h-[300px] p-8 flex flex-col justify-center group/bio"
           >
             <img src={imgVerticalLines} alt="" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] max-w-none object-cover opacity-50 pointer-events-none" />
             <img src={imgHorizontalLines} alt="" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] max-w-none object-cover opacity-50 pointer-events-none" />
-            <img src={imgProfile} alt="" className="absolute right-[-6px] top-[-8px] w-[312px] h-[416px] object-cover object-top pointer-events-none hidden sm:block opacity-90" />
+
+            {/* Ambient glow that blooms on hover */}
+            <div className="absolute right-0 bottom-0 w-[340px] h-[340px] rounded-full bg-[#f97d18]/0 group-hover/bio:bg-[#f97d18]/10 blur-[60px] transition-all duration-700 pointer-events-none" />
+
+            {/* Halo ring that pulses in on hover */}
+            <motion.div
+              className="absolute right-[80px] top-[40px] w-[200px] h-[200px] rounded-full border border-white/0 group-hover/bio:border-white/10 pointer-events-none hidden sm:block"
+              animate={{ scale: [1, 1.04, 1], opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute right-[55px] top-[18px] w-[250px] h-[250px] rounded-full border border-[#f97d18]/0 group-hover/bio:border-[#f97d18]/15 pointer-events-none hidden sm:block transition-all duration-500"
+              animate={{ scale: [1, 1.06, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            />
+
+            {/* Profile image with float + hover lift */}
+            <motion.img
+              src={imgProfile}
+              alt=""
+              className="absolute right-[-6px] top-[-8px] w-[312px] h-[416px] object-cover object-top pointer-events-none hidden sm:block"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              style={{ filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.5))" }}
+              whileHover={{ scale: 1.04, y: -12, filter: "drop-shadow(0 32px 64px rgba(249,125,24,0.25)) drop-shadow(0 0 0 rgba(0,0,0,0))", transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
+            />
 
             <div className="relative z-10 max-w-[370px] flex flex-col gap-5">
               <div className="flex flex-col gap-2">
