@@ -13,22 +13,19 @@ const imgFramer = "/FRAMER.png";
 const imgNotion = "/NOTION.png";
 const imgPS = "/PS.png";
 
-const imgFrame21 = "http://localhost:3845/assets/5e64e0e68d03c3481570075dcecfaf14b717eae0.png"; // Fallback noise texture
-const imgVerticalLines = "http://localhost:3845/assets/c4378fb68b669a4bb3eafafff7c353b1df88e1ad.svg";
-const imgHorizontalLines = "http://localhost:3845/assets/851607fba2a281bf94351ddeb829c04b6d30ea7a.svg";
+/* ─── CAROUSEL IMAGES (outside component to prevent re-creation) ─ */
+const carouselImages = [
+  "/img1.jpg", "/img2.jpg", "/img3.jpg", "/img4.jpg", "/img5.jpg",
+  "/img6.jpg", "/img7.jpg", "/img8.jpg", "/img9.jpg", "/img10.jpg",
+  "/img11.jpg", "/img12.jpg", "/img13.jpg", "/img14.JPG", "/img15.jpg", "/img16.jpg",
+  "/imgv1.jpg", "/imgv2.jpg", "/imgv3.jpg", "/imgv4.JPG"
+];
+const marqueeImages = [...carouselImages, ...carouselImages];
 
 export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string, text: string) => void }) {
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [showSplash, setShowSplash] = useState(true);
-
-  const carouselImages = [
-    "/img1.jpg", "/img2.jpg", "/img3.jpg", "/img4.jpg", "/img5.jpg",
-    "/img6.jpg", "/img7.jpg", "/img8.jpg", "/img9.jpg", "/img10.jpg",
-    "/img11.jpg", "/img12.jpg", "/img13.jpg", "/img14.JPG", "/img15.jpg", "/img16.jpg",
-    "/imgv1.jpg", "/imgv2.jpg", "/imgv3.jpg", "/imgv4.JPG"
-  ];
-  const marqueeImages = [...carouselImages, ...carouselImages];
 
   // Image Viewer state
   const [showControls, setShowControls] = useState(true);
@@ -159,8 +156,14 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             transition={{ duration: 0.3 }}
             className="lg:col-span-12 bg-[#111] rounded-[16px] relative overflow-hidden h-[300px] p-8 flex flex-col justify-center group/bio"
           >
-            <img src={imgVerticalLines} alt="" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] max-w-none object-cover opacity-50 pointer-events-none" />
-            <img src={imgHorizontalLines} alt="" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] max-w-none object-cover opacity-50 pointer-events-none" />
+            {/* CSS-only grid overlay — zero HTTP requests */}
+            <div
+              className="absolute inset-0 opacity-[0.08] pointer-events-none"
+              style={{
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
+                backgroundSize: '32px 32px'
+              }}
+            />
 
             {/* Ambient glow that blooms on hover */}
             <div className="absolute right-0 bottom-0 w-[340px] h-[340px] rounded-full bg-[#f97d18]/0 group-hover/bio:bg-[#f97d18]/10 blur-[60px] transition-all duration-700 pointer-events-none" />
@@ -241,15 +244,15 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             className="lg:col-span-6 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[300px] flex flex-col items-center justify-center group"
           >
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-[10%] left-[10%] rotate-[29deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgAI} className="w-full h-full object-cover" alt="AI" /></div>
-              <div className="absolute top-[25%] right-[15%] -rotate-[24deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgAntigravity} className="w-full h-full object-cover" alt="Antigravity" /></div>
-              <div className="absolute bottom-[20%] left-[20%] rotate-[-30deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgClaude} className="w-full h-full object-cover" alt="Claude" /></div>
-              <div className="absolute bottom-[15%] right-[25%] rotate-[14deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgCursor} className="w-full h-full object-cover" alt="Cursor" /></div>
-              <div className="absolute top-[45%] left-[5%] rotate-[18deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFigma} className="w-full h-full object-cover" alt="Figma" /></div>
-              <div className="absolute top-[55%] right-[10%] rotate-[28deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFramer} className="w-full h-full object-cover" alt="Framer" /></div>
-              <div className="absolute bottom-[40%] left-[15%] rotate-[-14deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgNotion} className="w-full h-full object-cover" alt="Notion" /></div>
-              <div className="absolute top-[10%] right-[40%] rotate-[5deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgPS} className="w-full h-full object-cover" alt="Photoshop" /></div>
-              <div className="absolute top-[35%] left-[45%] rotate-[-10deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFigma} className="w-full h-full object-cover" alt="Figma" /></div>
+              <div className="absolute top-[10%] left-[10%] rotate-[29deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgAI} className="w-full h-full object-cover" alt="AI" loading="lazy" /></div>
+              <div className="absolute top-[25%] right-[15%] -rotate-[24deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgAntigravity} className="w-full h-full object-cover" alt="Antigravity" loading="lazy" /></div>
+              <div className="absolute bottom-[20%] left-[20%] rotate-[-30deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgClaude} className="w-full h-full object-cover" alt="Claude" loading="lazy" /></div>
+              <div className="absolute bottom-[15%] right-[25%] rotate-[14deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgCursor} className="w-full h-full object-cover" alt="Cursor" loading="lazy" /></div>
+              <div className="absolute top-[45%] left-[5%] rotate-[18deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFigma} className="w-full h-full object-cover" alt="Figma" loading="lazy" /></div>
+              <div className="absolute top-[55%] right-[10%] rotate-[28deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFramer} className="w-full h-full object-cover" alt="Framer" loading="lazy" /></div>
+              <div className="absolute bottom-[40%] left-[15%] rotate-[-14deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgNotion} className="w-full h-full object-cover" alt="Notion" loading="lazy" /></div>
+              <div className="absolute top-[10%] right-[40%] rotate-[5deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgPS} className="w-full h-full object-cover" alt="Photoshop" loading="lazy" /></div>
+              <div className="absolute top-[35%] left-[45%] rotate-[-10deg] w-[40px] h-[40px] rounded-[8px] overflow-hidden border border-black/10 shadow-sm transition-transform group-hover:scale-110"><img src={imgFigma} className="w-full h-full object-cover" alt="Figma" loading="lazy" /></div>
             </div>
 
             <div className="relative z-10 flex flex-col items-center mt-6 pointer-events-none">
@@ -295,6 +298,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
               src="/Vision 2.0.jpg"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               alt="Vision 2.0 Project"
+              loading="lazy"
             />
           </motion.div>
 
@@ -310,6 +314,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
               src="/Voice Case Study.jpg"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               alt="One Button Change Project"
+              loading="lazy"
             />
           </motion.div>
 
@@ -333,6 +338,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
                     onClick={() => setSelectedImage(i % carouselImages.length)}
                     className="h-[126px] w-auto object-cover rounded-[8px] shadow-sm hover:scale-[1.02] transition-transform duration-300 pointer-events-auto"
                     alt=""
+                    loading="lazy"
                   />
                 ))}
               </motion.div>
@@ -357,7 +363,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
           transition={{ duration: 0.8, delay: 0.8 }}
           className="w-full border-t border-black/10 mt-12 min-h-[120px] relative overflow-hidden flex items-center justify-center bg-white"
         >
-          <img src={imgFrame21} className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" alt="" />
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
           <div className="relative z-10 flex flex-wrap justify-center gap-6 sm:gap-12 px-4 py-8">
             {[
               { name: 'Linkedin', href: 'https://www.linkedin.com/in/abhishek-r-m/' },
