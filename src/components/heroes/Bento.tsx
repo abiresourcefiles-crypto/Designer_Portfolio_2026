@@ -32,6 +32,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
   const [isHoveringControls, setIsHoveringControls] = useState(false);
   const thumbnailsContainerRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const stripScrollRef = useRef<HTMLDivElement>(null);
 
   // Keyboard navigation
   useEffect(() => {
@@ -64,15 +65,15 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
     };
   }, [selectedImage, isHoveringControls]);
 
-  // Auto-scroll active thumbnail into view
+  // Auto-center active thumbnail using scrollLeft math for reliability
   useEffect(() => {
-    if (selectedImage !== null && thumbnailRefs.current[selectedImage]) {
-      thumbnailRefs.current[selectedImage]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
-    }
+    if (selectedImage === null) return;
+    const container = stripScrollRef.current;
+    const thumb = thumbnailRefs.current[selectedImage];
+    if (!container || !thumb) return;
+    const containerCenter = container.offsetWidth / 2;
+    const thumbCenter = thumb.offsetLeft + thumb.offsetWidth / 2;
+    container.scrollTo({ left: thumbCenter - containerCenter, behavior: 'smooth' });
   }, [selectedImage]);
 
   useEffect(() => {
@@ -82,6 +83,27 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
       document.body.style.overflow = 'unset';
     }
   }, [showSplash]);
+
+  // Scroll lock when image viewer is open
+  useEffect(() => {
+    if (selectedImage === null) return;
+    // Measure scrollbar width to prevent layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const scrollY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      document.body.style.top = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, [selectedImage]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -194,8 +216,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             <div className="relative z-10 max-w-[370px] flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <div className="text-white text-[20px] font-normal leading-tight flex items-center">
-                  hi
-                  <div className="w-[30px] h-[30px] mx-1 flex items-center justify-center relative">
+                  hi<div className="w-[30px] h-[30px] flex items-center justify-center relative">
                     {!showSplash && (
                       <motion.div
                         layoutId="waving-hand"
@@ -206,8 +227,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
                         👋
                       </motion.div>
                     )}
-                  </div>
-                  , this is
+                  </div>, this is
                 </div>
                 <div className="flex items-center h-[46px] w-fit group/logo cursor-pointer">
                   <svg width="228" height="46" viewBox="0 0 228 46" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-auto object-contain">
@@ -399,10 +419,12 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0a]/95 font-dm select-none"
+              className="fixed inset-0 z-[100] bg-[#0a0a0a]/96 font-dm select-none overflow-hidden"
               onClick={() => setSelectedImage(null)}
               onMouseMove={() => setShowControls(true)}
             >
+              {/* Subtle blur layer behind all content */}
+              <div className="absolute inset-0 backdrop-blur-[8px] pointer-events-none" />
 
               {/* TOP CONTROLS (Auto-hide) */}
               <motion.div
@@ -433,115 +455,148 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
                 </div>
               </motion.div>
 
-              {/* CENTER NAVIGATION (Prev / Next) */}
+              {/* PREV arrow */}
               <motion.button
                 animate={{ opacity: showControls ? 1 : 0 }}
                 onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage - 1 + carouselImages.length) % carouselImages.length); }}
                 onMouseEnter={() => setIsHoveringControls(true)}
                 onMouseLeave={() => setIsHoveringControls(false)}
-                className="hidden sm:flex absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center text-white/50 hover:text-white hover:scale-105 transition-all z-50 bg-black/20 hover:bg-black/40 rounded-full backdrop-blur-md cursor-pointer"
+                className="hidden sm:flex absolute left-8 z-50 w-12 h-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white/70 hover:text-white border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-200 cursor-pointer"
+                style={{ top: 'calc((100vh - 140px) / 2 + 16px)', transform: 'translateY(-50%)' }}
               >
-                <ChevronLeft strokeWidth={1} className="w-8 h-8 -ml-1" />
+                <ChevronLeft strokeWidth={1.5} className="w-5 h-5" />
               </motion.button>
 
+              {/* NEXT arrow */}
               <motion.button
                 animate={{ opacity: showControls ? 1 : 0 }}
                 onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage + 1) % carouselImages.length); }}
                 onMouseEnter={() => setIsHoveringControls(true)}
                 onMouseLeave={() => setIsHoveringControls(false)}
-                className="hidden sm:flex absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center text-white/50 hover:text-white hover:scale-105 transition-all z-50 bg-black/20 hover:bg-black/40 rounded-full backdrop-blur-md cursor-pointer"
+                className="hidden sm:flex absolute right-8 z-50 w-12 h-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white/70 hover:text-white border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-200 cursor-pointer"
+                style={{ top: 'calc((100vh - 140px) / 2 + 16px)', transform: 'translateY(-50%)' }}
               >
-                <ChevronRight strokeWidth={1} className="w-8 h-8 -mr-1" />
+                <ChevronRight strokeWidth={1.5} className="w-5 h-5" />
               </motion.button>
 
-              {/* MAIN IMAGE WORKSPACE */}
+              {/* MAIN IMAGE — padded equally top and bottom, never touching edges */}
               <div
-                className="relative w-full h-full flex-1 flex justify-center items-center overflow-hidden"
+                className="absolute inset-x-0 flex items-center justify-center"
+                style={{ top: '64px', bottom: '140px', padding: '16px 80px' }}
+                onClick={(e) => e.stopPropagation()}
               >
-                <motion.img
-                  src={carouselImages[selectedImage]}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.95, opacity: 0 }}
-                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                  className="max-h-[85vh] max-w-[95vw] object-contain cursor-default"
-                  alt=""
-                  onClick={(e) => e.stopPropagation()}
-                />
-
-                {/* Mobile Navigation controls overlaid on image area */}
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={selectedImage}
+                    src={carouselImages[selectedImage]}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                    alt=""
+                    draggable={false}
+                  />
+                </AnimatePresence>
+                {/* Mobile arrows */}
                 <motion.div
                   animate={{ opacity: showControls ? 1 : 0 }}
-                  className="absolute inset-x-2 flex justify-between sm:hidden top-1/2 -translate-y-1/2 pointer-events-none z-50"
+                  className="absolute inset-x-3 flex justify-between top-1/2 -translate-y-1/2 pointer-events-none sm:hidden z-10"
                 >
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage - 1 + carouselImages.length) % carouselImages.length); }}
-                    className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 shadow-lg pointer-events-auto active:bg-black/40 cursor-pointer"
-                  >
-                    <ChevronLeft strokeWidth={1.5} className="w-6 h-6 -ml-1" />
+                  <button onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage - 1 + carouselImages.length) % carouselImages.length); }} className="w-11 h-11 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white pointer-events-auto cursor-pointer">
+                    <ChevronLeft strokeWidth={1.5} className="w-5 h-5" />
                   </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage + 1) % carouselImages.length); }}
-                    className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 shadow-lg pointer-events-auto active:bg-black/40 cursor-pointer"
-                  >
-                    <ChevronRight strokeWidth={1.5} className="w-6 h-6 -mr-1" />
+                  <button onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage + 1) % carouselImages.length); }} className="w-11 h-11 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white pointer-events-auto cursor-pointer">
+                    <ChevronRight strokeWidth={1.5} className="w-5 h-5" />
                   </button>
                 </motion.div>
               </div>
 
-              {/* BOTTOM THUMBNAIL STRIP */}
-              <motion.div
-                animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : 20 }}
-                transition={{ duration: 0.3 }}
-                className="absolute bottom-0 inset-x-0 pb-6 pt-16 flex flex-col items-center justify-end z-50 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"
+              {/* BOTTOM STRIP — fixed 140px, protected zone */}
+              <div
+                className="absolute bottom-0 inset-x-0 z-50"
+                style={{ height: '140px' }}
+                onClick={(e) => e.stopPropagation()}
+                onMouseEnter={() => setIsHoveringControls(true)}
+                onMouseLeave={() => setIsHoveringControls(false)}
               >
-                <div
-                  className="w-full max-w-5xl overflow-x-auto px-4 py-4 flex items-center justify-center shrink-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pointer-events-auto"
-                  onMouseEnter={() => setIsHoveringControls(true)}
-                  onMouseLeave={() => setIsHoveringControls(false)}
-                  onClick={(e) => e.stopPropagation()}
+                <motion.div
+                  animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : 16 }}
+                  transition={{ duration: 0.25 }}
+                  style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: '14px', paddingTop: '16px', background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)' }}
                 >
-                  <div className="flex gap-[4px] m-auto" ref={thumbnailsContainerRef}>
-                    {carouselImages.map((src, i) => (
-                      <div
-                        key={i}
-                        ref={(el) => { thumbnailRefs.current[i] = el; }}
-                        onClick={() => setSelectedImage(i)}
-                        className={`relative h-[56px] w-[90px] shrink-0 rounded-[6px] cursor-pointer transition-all duration-300 ${i === selectedImage ? 'ring-2 ring-sky-500 bg-[#1a1a1a] p-[2px] opacity-100 scale-110 z-10' : 'opacity-20 hover:opacity-50'}`}
-                      >
-                        <img src={src} className="w-full h-full object-contain rounded-[4px]" alt="" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Custom Scroller / Progress Indicator */}
-                <div 
-                  className="mt-6 w-32 sm:w-48 h-[12px] flex items-center cursor-pointer pointer-events-auto group"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const percentage = x / rect.width;
-                    const index = Math.floor(percentage * carouselImages.length);
-                    setSelectedImage(Math.min(Math.max(index, 0), carouselImages.length - 1));
-                  }}
-                  onMouseEnter={() => setIsHoveringControls(true)}
-                  onMouseLeave={() => setIsHoveringControls(false)}
-                >
-                  <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden relative">
-                    <motion.div 
-                      className="h-full bg-white/40 rounded-full group-hover:bg-white/60 transition-colors"
-                      initial={false}
-                      animate={{ 
-                        width: `${(1 / carouselImages.length) * 100}%`,
-                        x: `${(selectedImage || 0) * 100}%` 
+                  {/* Thumbnail row */}
+                  <div style={{ position: 'relative', width: '100%' }}>
+                    <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '56px', background: 'linear-gradient(to right, rgba(0,0,0,0.7), transparent)', zIndex: 10, pointerEvents: 'none' }} />
+                    <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '56px', background: 'linear-gradient(to left, rgba(0,0,0,0.7), transparent)', zIndex: 10, pointerEvents: 'none' }} />
+                    <div
+                      ref={stripScrollRef}
+                      style={{
+                        overflowX: 'auto',
+                        overflowY: 'hidden',
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: 'rgba(255,255,255,0.28) rgba(255,255,255,0.06)',
+                        paddingLeft: '24px',
+                        paddingRight: '24px',
+                        paddingTop: '4px',
+                        paddingBottom: '6px',
                       }}
-                      transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                    />
+                      onWheel={(e) => {
+                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                          e.preventDefault();
+                          stripScrollRef.current!.scrollLeft += e.deltaY;
+                        }
+                      }}
+                    >
+                      <div
+                        ref={thumbnailsContainerRef}
+                        style={{ display: 'flex', gap: '6px', width: 'max-content', margin: '0 auto' }}
+                      >
+                        {carouselImages.map((src, i) => {
+                          const isActive = i === selectedImage;
+                          return (
+                            <button
+                              key={i}
+                              ref={(el) => { thumbnailRefs.current[i] = el as unknown as HTMLDivElement; }}
+                              type="button"
+                              onClick={() => setSelectedImage(i)}
+                              style={{
+                                flexShrink: 0,
+                                height: '54px',
+                                width: '86px',
+                                borderRadius: '5px',
+                                overflow: 'hidden',
+                                cursor: 'pointer',
+                                outline: 'none',
+                                padding: 0,
+                                border: isActive ? '2px solid rgba(255,255,255,0.75)' : '2px solid transparent',
+                                opacity: isActive ? 1 : 0.35,
+                                transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                                transition: 'opacity 0.18s, transform 0.18s, border-color 0.18s',
+                                boxShadow: isActive ? '0 4px 20px rgba(0,0,0,0.6)' : 'none',
+                                background: '#111',
+                              }}
+                              onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.opacity = '0.6'; }}
+                              onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.opacity = '0.35'; }}
+                            >
+                              <img
+                                src={src}
+                                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                                alt=""
+                                draggable={false}
+                                loading="lazy"
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+
+
+
+                </motion.div>
+              </div>
 
             </motion.div>
           )}

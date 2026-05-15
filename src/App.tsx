@@ -31,8 +31,8 @@ export default function App() {
     setLoadingState({ active: true, text });
     setTimeout(() => {
       window.open(url, "_blank");
-      setTimeout(() => setLoadingState({ active: false, text: '' }), 100);
-    }, 600); // Increased duration slightly for better feel
+      setTimeout(() => setLoadingState({ active: false, text: '' }), 350);
+    }, 550);
   };
 
   const handleResumeClick = () => {
@@ -42,26 +42,49 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-white text-black font-dm selection:bg-black selection:text-white flex flex-col">
 
-      {/* Resume Loading Overlay */}
+      {/* External Link Transition Overlay */}
       <AnimatePresence>
         {loadingState.active && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[100] bg-white text-black flex flex-col items-center justify-center font-dm"
-          >
+          <>
+            {/* Background blur layer — renders behind the white overlay */}
             <motion.div
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.05, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[198] backdrop-blur-[6px] bg-white/30 pointer-events-none"
+            />
+
+            {/* White overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-0 z-[199] bg-white flex flex-col items-center justify-center font-dm pointer-events-none"
             >
-              <div className="w-2 h-2 rounded-full bg-black animate-ping"></div>
-              <span className="text-xl md:text-2xl font-bold tracking-widest uppercase">{loadingState.text}</span>
+              {/* Label */}
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ delay: 0.08, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="text-[14px] text-black font-medium tracking-normal no-underline"
+              >
+                Opening in a new tab
+              </motion.p>
+
+              {/* Progress line */}
+              <div className="mt-5 w-32 h-[1.5px] bg-black/10 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ scaleX: 0, originX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full h-full bg-black/50 rounded-full"
+                />
+              </div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
 
