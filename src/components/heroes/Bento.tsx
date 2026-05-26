@@ -316,7 +316,7 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
           >
             <img
               src="/Vision 2.0.jpg"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover"
               alt="Vision 2.0 Project"
               loading="lazy"
             />
@@ -331,8 +331,8 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             className="lg:col-span-7 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] group cursor-pointer"
           >
             <img
-              src="/Voice Case Study.jpg"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="/Casestudy02.jpg"
+              className="absolute inset-0 w-full h-full object-cover"
               alt="One Button Change Project"
               loading="lazy"
             />

@@ -189,7 +189,7 @@ function CaseStudies({ onLinkClick }: { onLinkClick: (url: string, text: string)
             hidden: {},
             visible: { transition: { staggerChildren: 0.15 } }
           }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-stretch"
         >
           {projects.map((p, i) => (
             <motion.div
@@ -200,15 +200,15 @@ function CaseStudies({ onLinkClick }: { onLinkClick: (url: string, text: string)
               }}
               className="flex flex-col h-full justify-between rounded-sm p-2 -m-2 transition-all group"
             >
-              <div>
+              <div className="flex flex-col flex-1">
                 <div
-                  className="aspect-[16/10] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm relative cursor-pointer"
+                  className="h-[240px] md:h-[320px] bg-[#111] mb-6 md:mb-8 overflow-hidden rounded-sm relative cursor-pointer"
                   onClick={() => onLinkClick(p.link, `Opening ${p.title}`)}
                 >
                   <img
                     src={p.image}
                     alt={p.title}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-105"
+                    className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
