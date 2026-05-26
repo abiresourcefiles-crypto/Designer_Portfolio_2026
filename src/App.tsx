@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Variation9 from "./components/heroes/Home";
-import BentoLayout from "./components/heroes/Bento";
+import Variation9 from "./components/View/Home";
+import BentoLayout from "./components/View/Bento";
 import About from "./components/About";
 import { Analytics } from "@vercel/analytics/react";
 import { motion, AnimatePresence } from "motion/react";
@@ -36,7 +36,7 @@ export default function App() {
   };
 
   const handleResumeClick = () => {
-    handleExternalLink("https://drive.google.com/file/d/1_REbzPqSZqnhBweCx8GncyX-PcG6Fd-q/view?usp=sharing", "Opening Resume");
+    handleExternalLink("https://drive.google.com/file/d/1PDSvN7AodfblqtDPwZIpIS5lqojYecOR/view?usp=sharing", "Opening Resume");
   };
 
   return (
@@ -93,7 +93,7 @@ export default function App() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full h-20 px-6 md:px-[100px] flex justify-between items-center border-b border-black z-50 sticky top-0 bg-white"
+        className="w-full h-20 px-6 md:px-[100px] flex justify-between items-center border-b border-black/15 z-50 sticky top-0 bg-white"
       >
         <div className="flex items-center gap-8 md:gap-14">
           {/* Logo */}
@@ -129,7 +129,7 @@ export default function App() {
             {[
               { name: "writings", url: "https://medium.com/@abhishekdesignspace", blank: true },
               { name: "about", action: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); } },
-              { name: "contact", action: () => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
+              { name: "", action: () => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); } }
             ].map((item) => (
               <motion.a
                 key={item.name}

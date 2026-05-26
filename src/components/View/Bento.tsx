@@ -26,6 +26,18 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [showSplash, setShowSplash] = useState(true);
+  const [cursorText, setCursorText] = useState<string | null>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      }
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Image Viewer state
   const [showControls, setShowControls] = useState(true);
@@ -312,7 +324,9 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             onClick={() => onLinkClick("https://www.behance.net/gallery/247223671/Vision-20-Assistive-Tool-for-CVD-Medicos", "Opening Case Study")}
-            className="lg:col-span-7 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] group cursor-pointer"
+            className="lg:col-span-7 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] group cursor-pointer hover:cursor-none"
+            onMouseEnter={() => setCursorText("View Case study")}
+            onMouseLeave={() => setCursorText(null)}
           >
             <img
               src="/Vision 2.0.jpg"
@@ -328,7 +342,9 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             onClick={() => onLinkClick("https://www.behance.net/gallery/246190513/A-Redesign-wont-Solve-the-Pain-Point", "Opening Case Study")}
-            className="lg:col-span-7 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] group cursor-pointer"
+            className="lg:col-span-7 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] group cursor-pointer hover:cursor-none"
+            onMouseEnter={() => setCursorText("View Case study")}
+            onMouseLeave={() => setCursorText(null)}
           >
             <img
               src="/Casestudy02.jpg"
@@ -346,22 +362,26 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             className="lg:col-span-10 bg-white border border-black/15 rounded-[16px] relative overflow-hidden h-[280px] flex flex-col justify-end p-8 pb-10"
           >
             <div className="absolute top-[22px] left-0 w-full h-[126px] overflow-hidden flex items-center">
-              <motion.div
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ ease: "linear", duration: 5, repeat: Infinity }}
-                className="flex gap-4 px-6 w-max cursor-pointer"
+              <div
+                style={{ animation: 'marquee-scroll 10s linear infinite', willChange: 'transform' }}
+                className="flex gap-4 px-6 w-max cursor-pointer hover:cursor-none"
+                onMouseEnter={() => setCursorText("View images")}
+                onMouseLeave={() => setCursorText(null)}
               >
                 {marqueeImages.map((src, i) => (
                   <img
                     key={i}
                     src={src}
-                    onClick={() => setSelectedImage(i % carouselImages.length)}
-                    className="h-[126px] w-auto object-cover rounded-[8px] shadow-sm hover:scale-[1.02] transition-transform duration-300 pointer-events-auto"
+                    onClick={() => {
+                      setSelectedImage(i % carouselImages.length);
+                      setCursorText(null);
+                    }}
+                    className="h-[126px] w-auto object-cover rounded-[8px] shadow-sm hover:opacity-90 transition-opacity duration-300 pointer-events-auto"
                     alt=""
-                    loading="lazy"
+                    loading="eager"
                   />
                 ))}
-              </motion.div>
+              </div>
             </div>
 
             <div className="absolute top-0 left-0 h-[200px] w-24 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
@@ -390,8 +410,8 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
               { name: 'Behance', href: 'https://www.behance.net/abhishekrm' },
               { name: 'X / Twitter', href: 'https://x.com/Abi_photography' },
               { name: 'Medium', href: 'https://medium.com/@abhishekdesignspace' },
-              { name: 'Instagram', href: '#' },
-              { name: 'Dribbble', href: '#' }
+              //{ name: 'Instagram', href: '#' },
+              //{ name: 'Dribbble', href: '#' }
             ].map((link) => (
               <a
                 key={link.name}
@@ -601,6 +621,20 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Custom Follower Cursor */}
+      <div
+        ref={cursorRef}
+        className={`fixed left-0 top-0 pointer-events-none z-[9999] bg-black text-white px-4 py-2 rounded-full text-xs font-bold tracking-tight shadow-xl flex items-center justify-center transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          cursorText && selectedImage === null ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+        }`}
+        style={{
+          willChange: 'transform, opacity, scale',
+          transitionProperty: 'opacity, scale',
+        }}
+      >
+        {cursorText}
       </div>
     </>
   );
