@@ -9,6 +9,14 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
     return sessionStorage.getItem('portfolioCurrentPage') || 'home';
   });
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     sessionStorage.setItem('portfolioCurrentPage', currentPage);
@@ -184,8 +192,48 @@ export default function App() {
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="flex-1 relative flex flex-col bg-[#0a0a0a]"
         >
-          <BentoLayout onLinkClick={handleExternalLink} />
+          <BentoLayout showSplash={showSplash} onLinkClick={handleExternalLink} />
         </motion.main>
+      </AnimatePresence>
+
+      {/* Background fades out slowly */}
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            key="splash-bg"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[9998] bg-white pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Hand unmounts instantly to trigger layoutId flight */}
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            key="splash-hand"
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none"
+          >
+            <motion.div
+              layoutId="waving-hand"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+                rotate: [0, 15, -10, 15, -10, 0]
+              }}
+              transition={{
+                scale: { type: "spring", damping: 15, stiffness: 200 },
+                rotate: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+              }}
+              className="text-[120px] origin-bottom-right"
+            >
+              👋
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <Analytics />

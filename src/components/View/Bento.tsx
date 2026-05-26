@@ -22,10 +22,15 @@ const carouselImages = [
 ];
 const marqueeImages = [...carouselImages, ...carouselImages];
 
-export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string, text: string) => void }) {
+export default function BentoLayout({ 
+  onLinkClick,
+  showSplash
+}: { 
+  onLinkClick: (url: string, text: string) => void;
+  showSplash: boolean;
+}) {
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [showSplash, setShowSplash] = useState(true);
   const [cursorText, setCursorText] = useState<string | null>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
 
@@ -117,12 +122,6 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
     };
   }, [selectedImage]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -138,45 +137,6 @@ export default function BentoLayout({ onLinkClick }: { onLinkClick: (url: string
 
   return (
     <>
-      {/* Background fades out slowly */}
-      <AnimatePresence>
-        {showSplash && (
-          <motion.div
-            key="splash-bg"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[190] bg-white pointer-events-none"
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Hand unmounts instantly to trigger layoutId flight */}
-      <AnimatePresence>
-        {showSplash && (
-          <motion.div
-            key="splash-hand"
-            className="fixed inset-0 z-[200] flex flex-col items-center justify-center pointer-events-none"
-          >
-            <motion.div
-              layoutId="waving-hand"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-                rotate: [0, 15, -10, 15, -10, 0]
-              }}
-              transition={{
-                scale: { type: "spring", damping: 15, stiffness: 200 },
-                rotate: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
-              }}
-              className="text-[120px] origin-bottom-right"
-            >
-              👋
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <div className="w-full min-h-[calc(100vh-80px)] bg-white py-10 px-4 md:px-8 font-dm">
         <div className="max-w-[1240px] mx-auto grid grid-cols-1 lg:grid-cols-24 gap-4">
